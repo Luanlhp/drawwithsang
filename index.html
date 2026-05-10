@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Draw with Sang — Online Drawing Courses</title>
+<title>Vẽ cùng Sang — Khóa học Vẽ Online</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ─── TOKENS ─────────────────────────────────────────── */
@@ -348,6 +348,43 @@ footer .foot-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:
 footer .foot-links a:hover{color:var(--orange2)}
 footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 
+/* ─── MESSENGER BUTTON ─────────────────────────────────── */
+.messenger-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #0084FF 0%, #0668E1 100%);
+  color: #fff;
+  text-decoration: none;
+  padding: 13px 22px 13px 16px;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  font-weight: 800;
+  box-shadow: 0 6px 28px rgba(0,132,255,.40), 0 2px 8px rgba(0,0,0,.12);
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+.messenger-fab:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 14px 40px rgba(0,132,255,.52), 0 4px 14px rgba(0,0,0,.15);
+}
+.messenger-fab:active {
+  transform: translateY(-1px) scale(.98);
+}
+.messenger-fab svg {
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.15));
+}
+@media(max-width:480px){
+  .messenger-fab { bottom: 20px; right: 16px; padding: 12px 18px 12px 14px; font-size:.84rem; }
+}
+
 /* ─── RESPONSIVE ───────────────────────────────────────── */
 @media(max-width:900px){
   nav{padding:14px 24px}
@@ -369,18 +406,18 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
     Draw with Sang
   </a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Courses</a></li>
-    <li><a href="#experience">Gallery</a></li>
-    <li><a href="#">Community</a></li>
+    <li><a href="#about">Giới thiệu</a></li>
+    <li><a href="#experience">Khóa học</a></li>
+    <li><a href="#experience">Thư viện</a></li>
+    <li><a href="#">Cộng đồng</a></li>
   </ul>
-  <a href="#experience" class="nav-cta">Start Drawing ✦</a>
+  <a href="#experience" class="nav-cta">Bắt đầu Vẽ ✦</a>
 </nav>
 
 <!-- ═══ HERO ═══════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-eyebrow">✦ Online Drawing Courses</div>
-  <h1>Learn Drawing<br>with <em>Sang</em></h1>
+  <div class="hero-eyebrow">✦ Khóa học Vẽ Online</div>
+  <h1>Học Vẽ<br>cùng <em>Sang</em></h1>
 
   <!-- GALLERY ROWS -->
   <div class="gallery-wrap">
@@ -429,7 +466,7 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   </div>
 
   <p class="hero-intro">
-    Welcome to <strong>Draw with Sang</strong> — a creative space where anyone can learn to draw, paint, and express themselves through art. From beginner pencil strokes to beautiful watercolors, every lesson is designed to be <strong>joyful, relaxing, and inspiring</strong>.
+    Chào mừng đến với <strong>Vẽ cùng Sang</strong> — không gian sáng tạo dành cho những ai muốn học vẽ, tô màu và thể hiện bản thân qua nghệ thuật. Từ những nét bút chì đầu tiên đến những bức tranh màu nước tuyệt đẹp, mỗi bài học được thiết kế để <strong>vui vẻ, thư giãn và đầy cảm hứng</strong>.
   </p>
 </section>
 
@@ -437,9 +474,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 <section class="section" id="about">
   <div class="section-inner">
     <div class="about-header reveal">
-      <div class="section-tag">✦ Meet the Artist</div>
-      <h2 class="section-title">About Sang</h2>
-      <p class="section-sub">An artist, educator, and lifelong lover of sketchbooks, cozy cafés, and the magic of putting pencil to paper.</p>
+      <div class="section-tag">✦ Gặp gỡ Nghệ sĩ</div>
+      <h2 class="section-title">Về Sang</h2>
+      <p class="section-sub">Một nghệ sĩ, nhà giáo, và người yêu sổ tay vẽ, quán cà phê ấm cúng, cùng niềm đam mê đặt bút xuống giấy.</p>
     </div>
 
     <div class="about-grid" style="margin-top:48px">
@@ -527,38 +564,38 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
       <!-- Info cards -->
       <div class="about-right">
         <div class="about-header reveal">
-          <div class="section-tag">✦ Who is Sang?</div>
-          <h2 class="section-title" style="font-size:2rem">Artist · Teacher<br>& Cat Mom 🐱</h2>
-          <p class="section-sub">Sang has been drawing since she could hold a pencil. Now she shares her love of art with thousands of students worldwide — online, at home, in pajamas.</p>
+          <div class="section-tag">✦ Sang là ai?</div>
+          <h2 class="section-title" style="font-size:2rem">Nghệ sĩ · Giáo viên<br>& Mẹ của Mèo 🐱</h2>
+          <p class="section-sub">Sang đã vẽ từ khi còn bé. Giờ đây, cô chia sẻ tình yêu nghệ thuật với hàng nghìn học viên trên toàn thế giới — online, tại nhà, mặc đồ pyjama.</p>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
           <div class="info-card reveal">
             <div class="info-icon">🖌️</div>
             <div>
-              <h4>10+ Years Experience</h4>
-              <p>Professional illustrator specializing in watercolor, gouache, and whimsical character design.</p>
+              <h4>10+ Năm Kinh nghiệm</h4>
+              <p>Họa sĩ minh họa chuyên nghiệp chuyên về màu nước, gouache và thiết kế nhân vật đáng yêu.</p>
             </div>
           </div>
           <div class="info-card reveal" style="transition-delay:.08s">
             <div class="info-icon">🎓</div>
             <div>
-              <h4>3,000+ Students Taught</h4>
-              <p>Students across 40+ countries — all skill levels, from absolute beginners to aspiring illustrators.</p>
+              <h4>3.000+ Học viên</h4>
+              <p>Học viên tại hơn 40 quốc gia — mọi trình độ, từ người hoàn toàn mới bắt đầu đến những họa sĩ đang phát triển.</p>
             </div>
           </div>
           <div class="info-card reveal" style="transition-delay:.16s">
             <div class="info-icon">🌸</div>
             <div>
-              <h4>Warm Community</h4>
-              <p>A kind, supportive online community where students share art, get feedback, and grow together.</p>
+              <h4>Cộng đồng Ấm áp</h4>
+              <p>Một cộng đồng online thân thiện, nơi học viên chia sẻ tác phẩm, nhận phản hồi và cùng nhau tiến bộ.</p>
             </div>
           </div>
           <div class="info-card reveal" style="transition-delay:.24s">
             <div class="info-icon">✨</div>
             <div>
-              <h4>Personal Brand</h4>
-              <p>Known for cozy, aesthetic, handmade illustrations with a distinctly warm and joyful style.</p>
+              <h4>Phong cách Riêng</h4>
+              <p>Được biết đến với những minh họa ấm cúng, thẩm mỹ và handmade mang phong cách vui tươi độc đáo.</p>
             </div>
           </div>
         </div>
@@ -571,8 +608,8 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 <section style="padding:80px 56px;position:relative;z-index:1" id="experience">
   <div class="experience-section">
     <div class="reveal">
-      <h2 class="exp-title">Experience Drawing<br>at Draw with Sang ✦</h2>
-      <p class="exp-sub">Sit back, grab your sketchbook, and follow along with Sang's relaxing step-by-step tutorials. Each lesson is designed to feel like drawing with a friend.</p>
+      <h2 class="exp-title">Trải nghiệm Vẽ<br>cùng Draw with Sang ✦</h2>
+      <p class="exp-sub">Ngả lưng, lấy sổ vẽ ra và theo dõi các hướng dẫn từng bước thư giãn của Sang. Mỗi bài học được thiết kế như đang vẽ cùng một người bạn.</p>
     </div>
 
     <div class="video-layout reveal">
@@ -614,17 +651,17 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
           </div>
         </div>
         <div class="video-meta">
-          <div class="lesson-badge" id="lessonBadge">Lesson 1 · Beginner</div>
-          <h3 id="videoTitle">Drawing a Cute Duck in Watercolor</h3>
-          <p id="videoDesc">Learn to sketch and paint an adorable duck step-by-step using simple shapes and warm watercolors.</p>
+          <div class="lesson-badge" id="lessonBadge">Bài 1 · Cơ bản</div>
+          <h3 id="videoTitle">Vẽ Chú Vịt Dễ Thương bằng Màu nước</h3>
+          <p id="videoDesc">Học cách phác thảo và tô màu chú vịt đáng yêu từng bước bằng hình khối đơn giản và màu nước ấm áp.</p>
         </div>
       </div>
 
       <!-- Playlist -->
       <div class="playlist">
         <div class="playlist-header">
-          <h4>Course Lessons</h4>
-          <span>12 lessons</span>
+          <h4>Bài học trong khóa</h4>
+          <span>12 bài học</span>
         </div>
 
         <!-- Lessons -->
@@ -633,9 +670,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#D4EDD8"/><ellipse cx="38" cy="32" rx="16" ry="12" fill="#F9E04B"/><circle cx="38" cy="20" r="10" fill="#F9E04B"/><ellipse cx="45" cy="24" rx="7" ry="4" fill="#F4722B"/><circle cx="33" cy="16" r="3" fill="#2D2D2D"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 1</div>
-            <div class="lesson-title">Drawing a Cute Duck in Watercolor</div>
-            <div class="lesson-dur">⏱ 18 min</div>
+            <div class="lesson-num">BÀI 1</div>
+            <div class="lesson-title">Vẽ Chú Vịt Dễ Thương bằng Màu nước</div>
+            <div class="lesson-dur">⏱ 18 phút</div>
           </div>
         </div>
 
@@ -644,9 +681,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><ellipse cx="38" cy="30" rx="18" ry="14" fill="#E8B89A"/><circle cx="38" cy="20" r="13" fill="#E8B89A"/><polygon points="30,12 26,4 34,10" fill="#C9906A"/><polygon points="46,12 50,4 42,10" fill="#C9906A"/><ellipse cx="34" cy="18" rx="3" ry="4" fill="#2D2D2D"/><ellipse cx="42" cy="18" rx="3" ry="4" fill="#2D2D2D"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 2</div>
-            <div class="lesson-title">Fluffy Cat Portrait — Pencil &amp; Ink</div>
-            <div class="lesson-dur">⏱ 24 min</div>
+            <div class="lesson-num">BÀI 2</div>
+            <div class="lesson-title">Chân dung Mèo Bông — Bút chì &amp; Mực</div>
+            <div class="lesson-dur">⏱ 24 phút</div>
           </div>
         </div>
 
@@ -655,9 +692,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF3D4"/><line x1="38" y1="48" x2="38" y2="26" stroke="#6DB56D" stroke-width="3"/><circle cx="38" cy="22" r="11" fill="#FBBF24"/><circle cx="38" cy="12" r="6" fill="#F4722B"/><circle cx="49" cy="16" r="6" fill="#F4722B"/><circle cx="49" cy="28" r="6" fill="#F4722B"/><circle cx="38" cy="32" r="6" fill="#F4722B"/><circle cx="27" cy="28" r="6" fill="#F4722B"/><circle cx="27" cy="16" r="6" fill="#F4722B"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 3</div>
-            <div class="lesson-title">Wildflowers — Loose Watercolor Style</div>
-            <div class="lesson-dur">⏱ 31 min</div>
+            <div class="lesson-num">BÀI 3</div>
+            <div class="lesson-title">Hoa Dại — Phong cách Màu nước Tự do</div>
+            <div class="lesson-dur">⏱ 31 phút</div>
           </div>
         </div>
 
@@ -666,9 +703,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#E8F4FF"/><ellipse cx="38" cy="36" rx="18" ry="13" fill="#F0E6FF"/><circle cx="38" cy="25" r="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="46" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="3" ry="8" fill="#FFB7C5"/><ellipse cx="46" cy="10" rx="3" ry="8" fill="#FFB7C5"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 4</div>
-            <div class="lesson-title">Bunny in a Garden — Gouache Painting</div>
-            <div class="lesson-dur">⏱ 27 min</div>
+            <div class="lesson-num">BÀI 4</div>
+            <div class="lesson-title">Thỏ trong Vườn — Tranh Gouache</div>
+            <div class="lesson-dur">⏱ 27 phút</div>
           </div>
         </div>
 
@@ -677,9 +714,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#C8E6F7"/><rect y="34" width="76" height="18" fill="#6DB56D"/><polygon points="20,34 32,12 44,34" fill="#8B4513"/><polygon points="14,34 28,5 42,34" fill="#A0522D"/><circle cx="58" cy="14" r="10" fill="#FBBF24"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 5</div>
-            <div class="lesson-title">Cozy Landscape at Sunset</div>
-            <div class="lesson-dur">⏱ 38 min</div>
+            <div class="lesson-num">BÀI 5</div>
+            <div class="lesson-title">Phong cảnh Ấm áp lúc Hoàng hôn</div>
+            <div class="lesson-dur">⏱ 38 phút</div>
           </div>
         </div>
 
@@ -688,9 +725,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF8F0"/><ellipse cx="28" cy="28" rx="16" ry="13" fill="#F4722B" opacity=".3"/><ellipse cx="44" cy="30" rx="14" ry="11" fill="#FBBF24" opacity=".4"/><ellipse cx="36" cy="36" rx="12" ry="9" fill="#F99A64" opacity=".5"/><ellipse cx="52" cy="22" rx="11" ry="8" fill="#FFB7C5" opacity=".5"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 6</div>
-            <div class="lesson-title">Abstract Watercolor Blending</div>
-            <div class="lesson-dur">⏱ 22 min</div>
+            <div class="lesson-num">BÀI 6</div>
+            <div class="lesson-title">Hòa màu Màu nước Trừu tượng</div>
+            <div class="lesson-dur">⏱ 22 phút</div>
           </div>
         </div>
 
@@ -699,9 +736,9 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
             <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><rect x="22" y="20" width="32" height="26" rx="5" fill="#F4722B" opacity=".8"/><rect x="28" y="10" width="20" height="14" rx="3" fill="#C8A882"/><path d="M36 24 Q38 20 40 24" stroke="white" stroke-width="1.5" fill="none"/></svg>
           </div>
           <div>
-            <div class="lesson-num">LESSON 7</div>
-            <div class="lesson-title">Cozy Café Illustration</div>
-            <div class="lesson-dur">⏱ 35 min</div>
+            <div class="lesson-num">BÀI 7</div>
+            <div class="lesson-title">Minh họa Quán Cà Phê Ấm cúng</div>
+            <div class="lesson-dur">⏱ 35 phút</div>
           </div>
         </div>
 
@@ -712,18 +749,32 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 
 <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
 <footer>
-  <span class="foot-logo">Draw with Sang ✦</span>
-  <p>A cozy corner of the internet for artists of all levels. Learn to draw, make friends, and fall in love with art — one stroke at a time.</p>
+  <span class="foot-logo">Vẽ cùng Sang ✦</span>
+  <p>Góc nhỏ ấm cúng trên Internet dành cho những người yêu nghệ thuật ở mọi trình độ. Học vẽ, kết bạn và yêu nghệ thuật — từng nét bút một.</p>
   <div class="foot-links">
-    <a href="#">Courses</a>
-    <a href="#">Community</a>
-    <a href="#">Gallery</a>
+    <a href="#">Khóa học</a>
+    <a href="#">Cộng đồng</a>
+    <a href="#">Thư viện</a>
     <a href="#">Blog</a>
     <a href="#">Instagram</a>
-    <a href="#">Contact</a>
+    <a href="#">Liên hệ</a>
   </div>
-  <p class="copy">© 2025 Draw with Sang — Made with 🧡 and lots of watercolor</p>
+  <p class="copy">© 2025 Vẽ cùng Sang — Làm với 🧡 và rất nhiều màu nước</p>
 </footer>
+
+<!-- ═══ MESSENGER FLOATING BUTTON ═══════════════════════ -->
+<a class="messenger-fab"
+   href="https://www.facebook.com/messages/e2ee/t/1587191542573912"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Nhắn tin qua Messenger">
+  <!-- Messenger icon -->
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2z" fill="white" opacity="0.2"/>
+    <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2zm1.007 12.462L10.96 12.29 7.015 14.46l4.337-4.617 2.046 2.172 3.945-2.172-4.336 4.619z" fill="white"/>
+  </svg>
+  Messenger
+</a>
 
 <script>
 /* ── Scroll reveal ─────────────────────────── */
@@ -737,13 +788,13 @@ revealEls.forEach(el=>ro.observe(el));
 
 /* ── Lesson data ───────────────────────────── */
 const lessons=[
-  {badge:'Lesson 1 · Beginner',title:'Drawing a Cute Duck in Watercolor',desc:'Learn to sketch and paint an adorable duck step-by-step using simple shapes and warm watercolors.'},
-  {badge:'Lesson 2 · Beginner',title:'Fluffy Cat Portrait — Pencil & Ink',desc:'Build a charming cat portrait using confident pencil lines and ink detail work.'},
-  {badge:'Lesson 3 · Beginner',title:'Wildflowers — Loose Watercolor Style',desc:'Paint a beautiful loose floral bouquet with gestural, expressive watercolor strokes.'},
-  {badge:'Lesson 4 · Intermediate',title:'Bunny in a Garden — Gouache Painting',desc:'Create a lush garden scene featuring a sleepy bunny in opaque gouache.'},
-  {badge:'Lesson 5 · Intermediate',title:'Cozy Landscape at Sunset',desc:'Capture a warm golden-hour landscape with layered washes and atmospheric depth.'},
-  {badge:'Lesson 6 · Beginner',title:'Abstract Watercolor Blending',desc:'Explore wet-on-wet blending techniques to create dreamy, abstract color fields.'},
-  {badge:'Lesson 7 · Intermediate',title:'Cozy Café Illustration',desc:'Illustrate a warm, inviting café scene full of charm and everyday magic.'},
+  {badge:'Bài 1 · Cơ bản',title:'Vẽ Chú Vịt Dễ Thương bằng Màu nước',desc:'Học cách phác thảo và tô màu chú vịt đáng yêu từng bước bằng hình khối đơn giản và màu nước ấm áp.'},
+  {badge:'Bài 2 · Cơ bản',title:'Chân dung Mèo Bông — Bút chì & Mực',desc:'Xây dựng chân dung mèo duyên dáng bằng những nét bút chì tự tin và chi tiết mực.'},
+  {badge:'Bài 3 · Cơ bản',title:'Hoa Dại — Phong cách Màu nước Tự do',desc:'Vẽ bó hoa dại tuyệt đẹp với những nét màu nước biểu cảm và phóng khoáng.'},
+  {badge:'Bài 4 · Trung cấp',title:'Thỏ trong Vườn — Tranh Gouache',desc:'Tạo cảnh vườn tươi tốt với chú thỏ đang ngủ bằng màu gouache không trong suốt.'},
+  {badge:'Bài 5 · Trung cấp',title:'Phong cảnh Ấm áp lúc Hoàng hôn',desc:'Ghi lại phong cảnh ánh vàng hoàng hôn với các lớp màu nước và chiều sâu không khí.'},
+  {badge:'Bài 6 · Cơ bản',title:'Hòa màu Màu nước Trừu tượng',desc:'Khám phá kỹ thuật hòa màu ướt-trên-ướt để tạo ra những cánh đồng màu sắc mơ màng, trừu tượng.'},
+  {badge:'Bài 7 · Trung cấp',title:'Minh họa Quán Cà Phê Ấm cúng',desc:'Minh họa cảnh quán cà phê ấm áp, đầy quyến rũ và phép màu của cuộc sống thường ngày.'},
 ];
 
 function selectLesson(card,idx){
