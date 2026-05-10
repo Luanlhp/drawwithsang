@@ -802,48 +802,25 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 
 <script>
 /* ── Messenger deep link ────────────────────────────────
-   Strategy:
-   1. On iOS, fire the fb-messenger:// URI scheme — if Messenger
-      is installed it opens instantly and navigates to the thread.
-   2. After a short delay, if the app didn't intercept (page is
-      still visible / no pagehide fired), fall back to the
-      universal m.me link which opens in Safari.
-   iOS detects app-switch via the visibilitychange / pagehide
-   events — if the OS switches to Messenger, those fire, so we
-   cancel the fallback timer.
+   Universal Link strategy (most reliable on iOS & Android):
+
+   https://www.messenger.com/t/USERNAME is a Universal Link.
+   iOS/Android intercept it at the OS level and hand it
+   directly to the Messenger app, opening the exact chat.
+   Using window.location.href (same-tab) on mobile ensures
+   the OS Universal Link handoff fires correctly — _blank
+   can block app handoff in some in-app browsers.
+
+   If Messenger is NOT installed, the browser opens the
+   Messenger web interface instead — clean fallback.
 ──────────────────────────────────────────────────────── */
 function openMessenger() {
-  /* Your Messenger username / vanity URL */
-  const USERNAME   = 'sang.dzjm';
-
-  /* Deep-link URI scheme (opens Messenger app directly on iOS & Android) */
-  const APP_SCHEME = 'fb-messenger://user-thread/' + USERNAME;
-
-  /* Universal fallback — works in any browser */
-  const WEB_URL    = 'https://m.me/' + USERNAME;
-
-  const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const isAndroid = /Android/i.test(navigator.userAgent);
-
-  if (isIOS || isAndroid) {
-    /* Try the native URI scheme */
-    window.location.href = APP_SCHEME;
-
-    /* If the OS does NOT switch apps within 1.5 s, the scheme
-       didn't work (app not installed) → open web fallback     */
-    let fallbackFired = false;
-    const timer = setTimeout(() => {
-      if (!fallbackFired) window.open(WEB_URL, '_blank');
-    }, 1500);
-
-    /* If the app opens, the page loses visibility — cancel fallback */
-    const cancel = () => { fallbackFired = true; clearTimeout(timer); };
-    document.addEventListener('visibilitychange', cancel, { once: true });
-    window.addEventListener('pagehide',           cancel, { once: true });
-    window.addEventListener('blur',               cancel, { once: true });
+  const CHAT_URL = 'https://www.messenger.com/t/sang.dzjm';
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    window.location.href = CHAT_URL;
   } else {
-    /* Desktop — just open the web URL */
-    window.open(WEB_URL, '_blank');
+    window.open(CHAT_URL, '_blank');
   }
 }
 </script>
