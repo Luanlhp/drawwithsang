@@ -367,6 +367,8 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   background: linear-gradient(135deg, #0084FF 0%, #0668E1 100%);
   color: #fff;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
   padding: 13px 22px 13px 16px;
   border-radius: 50px;
   font-family: 'Nunito', sans-serif;
@@ -790,18 +792,61 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 </footer>
 
 <!-- ═══ MESSENGER FLOATING BUTTON ═══════════════════════ -->
-<a class="messenger-fab"
-   href="https://www.facebook.com/messages/t/sang.dzjm"
-   target="_blank"
-   rel="noopener noreferrer"
-   aria-label="Nhắn tin qua Messenger">
-  <!-- Messenger icon -->
+<button class="messenger-fab" onclick="openMessenger()" aria-label="Nhắn tin qua Messenger">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2z" fill="white" opacity="0.2"/>
     <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2zm1.007 12.462L10.96 12.29 7.015 14.46l4.337-4.617 2.046 2.172 3.945-2.172-4.336 4.619z" fill="white"/>
   </svg>
   Messenger
-</a>
+</button>
+
+<script>
+/* ── Messenger deep link ────────────────────────────────
+   Strategy:
+   1. On iOS, fire the fb-messenger:// URI scheme — if Messenger
+      is installed it opens instantly and navigates to the thread.
+   2. After a short delay, if the app didn't intercept (page is
+      still visible / no pagehide fired), fall back to the
+      universal m.me link which opens in Safari.
+   iOS detects app-switch via the visibilitychange / pagehide
+   events — if the OS switches to Messenger, those fire, so we
+   cancel the fallback timer.
+──────────────────────────────────────────────────────── */
+function openMessenger() {
+  /* Your Messenger username / vanity URL */
+  const USERNAME   = 'sang.dzjm';
+
+  /* Deep-link URI scheme (opens Messenger app directly on iOS & Android) */
+  const APP_SCHEME = 'fb-messenger://user-thread/' + USERNAME;
+
+  /* Universal fallback — works in any browser */
+  const WEB_URL    = 'https://m.me/' + USERNAME;
+
+  const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (isIOS || isAndroid) {
+    /* Try the native URI scheme */
+    window.location.href = APP_SCHEME;
+
+    /* If the OS does NOT switch apps within 1.5 s, the scheme
+       didn't work (app not installed) → open web fallback     */
+    let fallbackFired = false;
+    const timer = setTimeout(() => {
+      if (!fallbackFired) window.open(WEB_URL, '_blank');
+    }, 1500);
+
+    /* If the app opens, the page loses visibility — cancel fallback */
+    const cancel = () => { fallbackFired = true; clearTimeout(timer); };
+    document.addEventListener('visibilitychange', cancel, { once: true });
+    window.addEventListener('pagehide',           cancel, { once: true });
+    window.addEventListener('blur',               cancel, { once: true });
+  } else {
+    /* Desktop — just open the web URL */
+    window.open(WEB_URL, '_blank');
+  }
+}
+</script>
 
 <script>
 /* ── Scroll reveal ─────────────────────────── */
