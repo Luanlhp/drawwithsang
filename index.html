@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draw with Sang — Online Drawing Courses</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  --bg:       #F5F0EB;
+  --bg2:      #EDE7DF;
+  --orange:   #F4722B;
+  --orange2:  #F99A64;
+  --orange-soft: #FDE8DA;
+  --brown:    #3D2B1F;
+  --warm-gray:#7A6A5E;
+  --white:    #FFFDF9;
+  --card-r:   20px;
+  --shadow:   0 6px 28px rgba(61,43,31,.10);
+  --shadow-lg:0 14px 48px rgba(61,43,31,.15);
+}
+
+/* ─── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--brown);
+  overflow-x:hidden;
+  line-height:1.7;
+}
+
+/* ─── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 56px;
+  background:rgba(245,240,235,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(244,114,43,.15);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.45rem;font-weight:900;
+  color:var(--brown);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo .dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--orange);display:inline-block;
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-size:.9rem;font-weight:700;
+  color:var(--warm-gray);text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--orange)}
+.nav-cta{
+  background:var(--orange);color:#fff;
+  padding:10px 26px;border-radius:50px;
+  font-weight:800;font-size:.88rem;
+  text-decoration:none;
+  box-shadow:0 4px 18px rgba(244,114,43,.35);
+  transition:transform .18s,box-shadow .18s;
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(244,114,43,.45)}
+
+/* ─── HERO ─────────────────────────────────────────────── */
+.hero{
+  padding:140px 0 80px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(244,114,43,.12) 0%,transparent 70%);
+  top:-100px;left:50%;transform:translateX(-50%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-block;
+  background:var(--orange-soft);
+  color:var(--orange);
+  font-size:.82rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 20px;border-radius:50px;
+  margin-bottom:20px;
+  border:1.5px solid rgba(244,114,43,.25);
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.6rem,5.5vw,4.6rem);
+  font-weight:900;
+  line-height:1.1;
+  color:var(--brown);
+  margin-bottom:10px;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--orange);
+  position:relative;
+}
+.hero h1 em::after{
+  content:'';
+  position:absolute;bottom:-4px;left:0;right:0;
+  height:4px;border-radius:4px;
+  background:var(--orange);opacity:.35;
+}
+
+/* ─── GALLERY ROWS ─────────────────────────────────────── */
+.gallery-wrap{
+  margin:52px 0 48px;
+  display:flex;flex-direction:column;gap:14px;
+  overflow:hidden;
+}
+.gallery-row{
+  display:flex;gap:12px;
+  width:max-content;
+  animation:scrollRow 28s linear infinite;
+}
+.gallery-row:nth-child(2){
+  animation-direction:reverse;
+  animation-duration:34s;
+}
+@keyframes scrollRow{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.gallery-row:hover{animation-play-state:paused}
+
+.art-card{
+  border-radius:16px;
+  overflow:hidden;
+  flex-shrink:0;
+  box-shadow:var(--shadow);
+  position:relative;
+  transition:transform .3s,box-shadow .3s;
+}
+.art-card:hover{transform:translateY(-5px) scale(1.03);box-shadow:var(--shadow-lg)}
+.art-card.sq{width:130px;height:130px}
+.art-card.wide{width:200px;height:130px}
+.art-card.tall{width:100px;height:140px}
+
+/* Illustrated SVG art-cards */
+.art-card svg{width:100%;height:100%;display:block}
+
+.hero-intro{
+  max-width:560px;margin:0 auto;
+  font-size:1.05rem;color:var(--warm-gray);
+  line-height:1.8;
+}
+.hero-intro strong{color:var(--orange)}
+
+/* ─── SECTION SHARED ───────────────────────────────────── */
+.section{padding:96px 56px}
+.section-inner{max-width:1160px;margin:0 auto}
+.section-tag{
+  display:inline-block;
+  font-size:.78rem;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:10px;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:900;line-height:1.2;
+  color:var(--brown);
+  margin-bottom:16px;
+}
+.section-sub{
+  font-size:1rem;color:var(--warm-gray);
+  max-width:540px;line-height:1.8;
+}
+
+/* ─── ABOUT ─────────────────────────────────────────────── */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:36px;
+  align-items:start;
+}
+.about-images{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.about-img{
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.about-img.tall{grid-row:span 1}
+.about-img svg,.about-img-placeholder{
+  width:100%;aspect-ratio:3/4;
+  display:block;
+}
+.about-right{display:flex;flex-direction:column;gap:16px;padding-top:8px}
+.about-header{margin-bottom:8px}
+
+.info-card{
+  background:var(--white);
+  border-radius:var(--card-r);
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+  display:flex;gap:16px;align-items:flex-start;
+  transition:transform .25s,box-shadow .25s;
+}
+.info-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.info-icon{
+  width:44px;height:44px;border-radius:14px;
+  background:var(--orange-soft);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:1.3rem;
+}
+.info-card h4{font-size:.95rem;font-weight:800;color:var(--brown);margin-bottom:4px}
+.info-card p{font-size:.84rem;color:var(--warm-gray);line-height:1.6}
+
+/* ─── EXPERIENCE / VIDEO ───────────────────────────────── */
+.experience-section{background:var(--bg2);border-radius:40px;margin:0 32px;padding:72px 56px}
+.exp-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:900;color:var(--orange);
+  line-height:1.15;margin-bottom:14px;
+}
+.exp-sub{font-size:1rem;color:var(--warm-gray);max-width:500px;line-height:1.8;margin-bottom:44px}
+
+.video-layout{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:24px;
+  align-items:start;
+}
+.video-player{
+  background:#1a1208;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.video-thumb{
+  width:100%;aspect-ratio:16/9;
+  position:relative;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.video-thumb svg{width:100%;height:100%;position:absolute;inset:0}
+.play-btn{
+  position:relative;z-index:2;
+  width:72px;height:72px;
+  background:rgba(255,255,255,.92);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  transition:transform .2s,box-shadow .2s;
+}
+.play-btn:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.play-btn svg{margin-left:4px}
+.video-meta{
+  padding:18px 22px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.video-meta .lesson-badge{
+  font-size:.72rem;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--orange2);
+  margin-bottom:6px;
+}
+.video-meta h3{color:#fff;font-size:1.1rem;font-weight:800;margin-bottom:4px}
+.video-meta p{color:rgba(255,255,255,.5);font-size:.82rem}
+
+/* ─── PLAYLIST ─────────────────────────────────────────── */
+.playlist{
+  background:var(--white);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  max-height:540px;
+  overflow-y:auto;
+}
+.playlist::-webkit-scrollbar{width:5px}
+.playlist::-webkit-scrollbar-track{background:transparent}
+.playlist::-webkit-scrollbar-thumb{background:var(--orange2);border-radius:10px}
+
+.playlist-header{
+  padding:18px 20px;
+  border-bottom:1px solid var(--bg2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.playlist-header h4{font-size:.95rem;font-weight:800;color:var(--brown)}
+.playlist-header span{font-size:.78rem;color:var(--warm-gray)}
+
+.lesson-card{
+  display:flex;gap:12px;align-items:center;
+  padding:12px 16px;
+  cursor:pointer;
+  border-bottom:1px solid var(--bg);
+  transition:background .2s;
+}
+.lesson-card:hover{background:var(--orange-soft)}
+.lesson-card.active{background:var(--brown)}
+.lesson-thumb{
+  width:76px;height:52px;border-radius:10px;
+  overflow:hidden;flex-shrink:0;
+  position:relative;
+}
+.lesson-thumb svg{width:100%;height:100%}
+.lesson-num{
+  font-size:.7rem;font-weight:800;
+  color:var(--warm-gray);
+  margin-bottom:3px;
+  letter-spacing:.05em;
+}
+.lesson-card.active .lesson-num{color:rgba(255,255,255,.5)}
+.lesson-title{font-size:.84rem;font-weight:700;color:var(--brown);line-height:1.4}
+.lesson-card.active .lesson-title{color:#fff}
+.lesson-dur{font-size:.72rem;color:var(--warm-gray);margin-top:3px}
+.lesson-card.active .lesson-dur{color:rgba(255,255,255,.45)}
+
+/* ─── SCROLL FADE IN ───────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ─── FOOTER ───────────────────────────────────────────── */
+footer{
+  background:var(--brown);
+  color:rgba(255,255,255,.6);
+  text-align:center;
+  padding:48px 56px 32px;
+  font-size:.88rem;
+}
+footer .foot-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:900;
+  color:#fff;margin-bottom:12px;display:block;
+}
+footer p{max-width:400px;margin:0 auto 24px;line-height:1.7}
+footer .foot-links{display:flex;justify-content:center;gap:28px;margin-bottom:28px;flex-wrap:wrap}
+footer .foot-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.85rem;font-weight:600;transition:color .2s}
+footer .foot-links a:hover{color:var(--orange2)}
+footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
+
+/* ─── RESPONSIVE ───────────────────────────────────────── */
+@media(max-width:900px){
+  nav{padding:14px 24px}
+  .nav-links{display:none}
+  .section{padding:64px 24px}
+  .about-grid,.video-layout{grid-template-columns:1fr}
+  .experience-section{margin:0 12px;padding:48px 28px}
+  .art-card.sq{width:100px;height:100px}
+  .art-card.wide{width:155px;height:100px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="dot"></span>
+    Draw with Sang
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Courses</a></li>
+    <li><a href="#experience">Gallery</a></li>
+    <li><a href="#">Community</a></li>
+  </ul>
+  <a href="#experience" class="nav-cta">Start Drawing ✦</a>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-eyebrow">✦ Online Drawing Courses</div>
+  <h1>Learn Drawing<br>with <em>Sang</em></h1>
+
+  <!-- GALLERY ROWS -->
+  <div class="gallery-wrap">
+
+    <!-- ROW 1 (duplicated for seamless loop) -->
+    <div class="gallery-row">
+      <!-- 1 duck -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#D4EDD8"/><ellipse cx="65" cy="80" rx="32" ry="24" fill="#F9E04B"/><circle cx="65" cy="54" r="18" fill="#F9E04B"/><ellipse cx="65" cy="54" rx="18" ry="18" fill="#F9E04B"/><ellipse cx="78" cy="62" rx="10" ry="6" fill="#F4722B"/><circle cx="58" cy="48" r="4" fill="#2D2D2D"/><circle cx="59" cy="47" r="1.5" fill="#fff"/><path d="M48 78 Q55 95 65 90 Q75 95 82 78" stroke="#E8C52B" stroke-width="2" fill="none"/><ellipse cx="65" cy="108" rx="28" ry="8" fill="#A8D5AE" opacity=".5"/></svg></div>
+      <!-- 2 cat -->
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#FDE8DA"/><ellipse cx="100" cy="78" rx="36" ry="30" fill="#E8B89A"/><circle cx="100" cy="52" r="24" fill="#E8B89A"/><polygon points="80,36 72,16 88,32" fill="#C9906A"/><polygon points="120,36 128,16 112,32" fill="#C9906A"/><ellipse cx="93" cy="50" rx="5" ry="7" fill="#2D2D2D"/><ellipse cx="107" cy="50" rx="5" ry="7" fill="#2D2D2D"/><circle cx="93" cy="49" r="2" fill="#fff"/><circle cx="107" cy="49" r="2" fill="#fff"/><ellipse cx="100" cy="58" rx="5" ry="3.5" fill="#F4A0A0"/><path d="M86 62 Q100 72 114 62" stroke="#2D2D2D" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="75" y1="58" x2="55" y2="54" stroke="#2D2D2D" stroke-width="1.2"/><line x1="75" y1="61" x2="53" y2="61" stroke="#2D2D2D" stroke-width="1.2"/><line x1="75" y1="64" x2="55" y2="68" stroke="#2D2D2D" stroke-width="1.2"/><line x1="125" y1="58" x2="145" y2="54" stroke="#2D2D2D" stroke-width="1.2"/><line x1="125" y1="61" x2="147" y2="61" stroke="#2D2D2D" stroke-width="1.2"/><line x1="125" y1="64" x2="145" y2="68" stroke="#2D2D2D" stroke-width="1.2"/></svg></div>
+      <!-- 3 flowers -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#FFF3D4"/><line x1="65" y1="110" x2="65" y2="60" stroke="#6DB56D" stroke-width="4"/><line x1="65" y1="85" x2="48" y2="70" stroke="#6DB56D" stroke-width="3"/><line x1="65" y1="90" x2="82" y2="75" stroke="#6DB56D" stroke-width="3"/><circle cx="65" cy="55" r="18" fill="#FBBF24"/><circle cx="65" cy="37" r="9" fill="#F4722B"/><circle cx="83" cy="45" r="9" fill="#F4722B"/><circle cx="83" cy="65" r="9" fill="#F4722B"/><circle cx="65" cy="73" r="9" fill="#F4722B"/><circle cx="47" cy="65" r="9" fill="#F4722B"/><circle cx="47" cy="45" r="9" fill="#F4722B"/><circle cx="65" cy="55" r="12" fill="#FBBF24"/></svg></div>
+      <!-- 4 rabbit -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#E8F4FF"/><ellipse cx="65" cy="88" rx="28" ry="22" fill="#F0E6FF"/><circle cx="65" cy="62" r="20" fill="#F0E6FF"/><ellipse cx="54" cy="35" rx="7" ry="18" fill="#F0E6FF" stroke="#D4C8FF" stroke-width="1.5"/><ellipse cx="76" cy="35" rx="7" ry="18" fill="#F0E6FF" stroke="#D4C8FF" stroke-width="1.5"/><ellipse cx="54" cy="35" rx="4" ry="12" fill="#FFB7C5"/><ellipse cx="76" cy="35" rx="4" ry="12" fill="#FFB7C5"/><ellipse cx="58" cy="60" rx="4" ry="5.5" fill="#2D2D2D"/><ellipse cx="72" cy="60" rx="4" ry="5.5" fill="#2D2D2D"/><circle cx="59" cy="58" r="1.5" fill="#fff"/><circle cx="73" cy="58" r="1.5" fill="#fff"/><ellipse cx="65" cy="68" rx="4" ry="3" fill="#FFB7C5"/><path d="M57 72 Q65 78 73 72" stroke="#2D2D2D" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
+      <!-- 5 landscape -->
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#C8E6F7"/><rect y="85" width="200" height="45" fill="#6DB56D"/><ellipse cx="160" cy="88" rx="35" ry="30" fill="#5AA85A"/><ellipse cx="130" cy="95" rx="28" ry="24" fill="#6DB56D"/><polygon points="60,85 80,45 100,85" fill="#A0522D"/><polygon points="40,85 65,30 90,85" fill="#8B4513"/><rect x="72" y="65" width="16" height="20" fill="#F9E04B" opacity=".8"/><circle cx="40" cy="28" r="18" fill="#FBBF24"/><ellipse cx="80" cy="18" rx="20" ry="10" fill="white" opacity=".8"/><ellipse cx="120" cy="24" rx="28" ry="12" fill="white" opacity=".6"/></svg></div>
+      <!-- 6 watercolor blob -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#FFF8F0"/><ellipse cx="50" cy="55" rx="30" ry="25" fill="#F4722B" opacity=".35"/><ellipse cx="75" cy="70" rx="28" ry="22" fill="#FBBF24" opacity=".4"/><ellipse cx="60" cy="80" rx="22" ry="18" fill="#F99A64" opacity=".45"/><ellipse cx="85" cy="50" rx="20" ry="16" fill="#FFB7C5" opacity=".5"/><ellipse cx="45" cy="75" rx="16" ry="13" fill="#C77DFF" opacity=".3"/><text x="20" y="120" font-size="9" fill="#C9906A" font-family="Georgia" opacity=".7">watercolor</text></svg></div>
+      <!-- 7 cozy mug -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#FDE8DA"/><rect x="35" y="55" width="60" height="50" rx="10" fill="#F4722B"/><path d="M95 65 Q112 65 112 80 Q112 95 95 95" stroke="#F4722B" stroke-width="8" fill="none" stroke-linecap="round"/><rect x="35" y="99" width="60" height="8" rx="4" fill="#D4572A"/><path d="M52 45 Q55 32 52 20" stroke="#aaa" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M65 50 Q68 35 65 18" stroke="#bbb" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M78 45 Q81 32 78 22" stroke="#aaa" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="44" y="82" font-size="18" fill="white">☕</text></svg></div>
+      <!-- 8 jellyfish -->
+      <div class="art-card tall"><svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="140" fill="#1A2744"/><ellipse cx="50" cy="48" rx="32" ry="26" fill="#C77DFF" opacity=".9"/><path d="M24 65 Q20 90 18 115" stroke="#C77DFF" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/><path d="M35 68 Q33 95 30 118" stroke="#FFB7C5" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/><path d="M50 70 Q50 98 50 122" stroke="#C77DFF" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/><path d="M65 68 Q67 95 70 118" stroke="#FFB7C5" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/><path d="M76 65 Q80 90 82 115" stroke="#C77DFF" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".7"/><circle cx="30" cy="42" r="5" fill="white" opacity=".4"/><circle cx="68" cy="42" r="5" fill="white" opacity=".4"/><circle cx="35" cy="25" r="20" fill="#C77DFF" opacity=".3"/></svg></div>
+      <!-- duplicate for loop -->
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#D4EDD8"/><ellipse cx="65" cy="80" rx="32" ry="24" fill="#F9E04B"/><circle cx="65" cy="54" r="18" fill="#F9E04B"/><ellipse cx="78" cy="62" rx="10" ry="6" fill="#F4722B"/><circle cx="58" cy="48" r="4" fill="#2D2D2D"/><circle cx="59" cy="47" r="1.5" fill="#fff"/></svg></div>
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#FDE8DA"/><ellipse cx="100" cy="78" rx="36" ry="30" fill="#E8B89A"/><circle cx="100" cy="52" r="24" fill="#E8B89A"/><polygon points="80,36 72,16 88,32" fill="#C9906A"/><polygon points="120,36 128,16 112,32" fill="#C9906A"/><ellipse cx="93" cy="50" rx="5" ry="7" fill="#2D2D2D"/><ellipse cx="107" cy="50" rx="5" ry="7" fill="#2D2D2D"/><circle cx="93" cy="49" r="2" fill="#fff"/><circle cx="107" cy="49" r="2" fill="#fff"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#FFF3D4"/><line x1="65" y1="110" x2="65" y2="60" stroke="#6DB56D" stroke-width="4"/><circle cx="65" cy="55" r="18" fill="#FBBF24"/><circle cx="65" cy="37" r="9" fill="#F4722B"/><circle cx="83" cy="45" r="9" fill="#F4722B"/><circle cx="83" cy="65" r="9" fill="#F4722B"/><circle cx="65" cy="73" r="9" fill="#F4722B"/><circle cx="47" cy="65" r="9" fill="#F4722B"/><circle cx="47" cy="45" r="9" fill="#F4722B"/><circle cx="65" cy="55" r="12" fill="#FBBF24"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#E8F4FF"/><ellipse cx="65" cy="88" rx="28" ry="22" fill="#F0E6FF"/><circle cx="65" cy="62" r="20" fill="#F0E6FF"/><ellipse cx="54" cy="35" rx="7" ry="18" fill="#F0E6FF"/><ellipse cx="76" cy="35" rx="7" ry="18" fill="#F0E6FF"/><ellipse cx="54" cy="35" rx="4" ry="12" fill="#FFB7C5"/><ellipse cx="76" cy="35" rx="4" ry="12" fill="#FFB7C5"/><ellipse cx="58" cy="60" rx="4" ry="5.5" fill="#2D2D2D"/><ellipse cx="72" cy="60" rx="4" ry="5.5" fill="#2D2D2D"/></svg></div>
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#C8E6F7"/><rect y="85" width="200" height="45" fill="#6DB56D"/><ellipse cx="160" cy="88" rx="35" ry="30" fill="#5AA85A"/><polygon points="60,85 80,45 100,85" fill="#A0522D"/><polygon points="40,85 65,30 90,85" fill="#8B4513"/><circle cx="40" cy="28" r="18" fill="#FBBF24"/></svg></div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="gallery-row">
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#F5ECD7"/><rect x="70" y="50" width="60" height="70" rx="6" fill="#D2691E" opacity=".8"/><rect x="80" y="30" width="40" height="25" rx="4" fill="#C8A882"/><rect x="55" y="20" width="90" height="14" rx="7" fill="#8B6914"/><circle cx="100" cy="80" r="8" fill="#8B6914" opacity=".6"/><rect x="60" y="95" width="80" height="25" rx="5" fill="#B8860B" opacity=".5"/><text x="48" y="118" font-size="8" fill="#8B6914" font-family="Georgia">cozy studio</text></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#E8F8E8"/><path d="M20 100 Q65 20 110 100" fill="#6DB56D" opacity=".4"/><path d="M20 110 Q65 40 110 110" fill="#5AA85A" opacity=".5"/><circle cx="55" cy="50" r="12" fill="#F4722B" opacity=".85"/><circle cx="80" cy="38" r="9" fill="#FBBF24" opacity=".9"/><circle cx="38" cy="68" r="8" fill="#FFB7C5" opacity=".9"/><circle cx="95" cy="58" r="10" fill="#F4722B" opacity=".7"/></svg></div>
+      <div class="art-card tall"><svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="140" fill="#FFFBF0"/><rect x="8" y="8" width="84" height="124" rx="4" fill="none" stroke="#F4722B" stroke-width="2" stroke-dasharray="4,3"/><ellipse cx="50" cy="58" rx="26" ry="20" fill="#FFB7C5" opacity=".7"/><ellipse cx="50" cy="54" rx="22" ry="16" fill="#FF8FAB" opacity=".6"/><path d="M50 34 L54 46 L66 46 L56 54 L60 66 L50 58 L40 66 L44 54 L34 46 L46 46 Z" fill="#F4722B" opacity=".8"/><text x="22" y="108" font-size="9" fill="#C9906A" font-family="Georgia">my sketchbook</text></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#1A3A2A"/><circle cx="65" cy="55" r="28" fill="#FBBF24" opacity=".9"/><circle cx="65" cy="55" r="28" fill="none" stroke="#F4722B" stroke-width="3" stroke-dasharray="5,3"/><ellipse cx="65" cy="55" rx="14" ry="14" fill="#F4722B" opacity=".85"/><circle cx="65" cy="55" r="6" fill="#2D2D2D"/><line x1="65" y1="20" x2="65" y2="5" stroke="#FBBF24" stroke-width="3"/><line x1="65" y1="90" x2="65" y2="105" stroke="#FBBF24" stroke-width="3"/><line x1="30" y1="55" x2="15" y2="55" stroke="#FBBF24" stroke-width="3"/><line x1="100" y1="55" x2="115" y2="55" stroke="#FBBF24" stroke-width="3"/></svg></div>
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#F0F4FF"/><rect x="0" y="80" width="200" height="50" fill="#8EC5FC" opacity=".5"/><path d="M0 80 Q50 60 100 80 Q150 100 200 75 L200 130 L0 130Z" fill="#5B9BD5" opacity=".4"/><circle cx="150" cy="40" r="22" fill="#FCD34D" opacity=".9"/><path d="M10 65 Q30 50 50 60 Q70 70 90 55" stroke="white" stroke-width="3" fill="none" opacity=".6"/><path d="M30 50 Q60 35 90 45 Q120 55 150 40" stroke="white" stroke-width="2.5" fill="none" opacity=".5"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#FFF0F5"/><rect x="30" y="65" width="70" height="50" rx="8" fill="#E8B89A"/><ellipse cx="65" cy="65" rx="35" ry="28" fill="#F4E0D0"/><ellipse cx="48" cy="45" rx="8" ry="22" fill="#F4E0D0" stroke="#E0C0A8" stroke-width="1.5"/><ellipse cx="82" cy="45" rx="8" ry="22" fill="#F4E0D0" stroke="#E0C0A8" stroke-width="1.5"/><ellipse cx="57" cy="62" rx="5" ry="6" fill="#2D2D2D"/><ellipse cx="73" cy="62" rx="5" ry="6" fill="#2D2D2D"/><circle cx="58" cy="61" r="2" fill="#fff"/><circle cx="74" cy="61" r="2" fill="#fff"/><ellipse cx="65" cy="71" rx="5" ry="3.5" fill="#FFB7C5"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#F0FFF4"/><rect x="55" y="90" width="20" height="30" rx="4" fill="#8B6914"/><ellipse cx="65" cy="78" rx="28" ry="22" fill="#22C55E" opacity=".8"/><ellipse cx="65" cy="65" rx="22" ry="18" fill="#16A34A" opacity=".85"/><ellipse cx="65" cy="54" rx="16" ry="13" fill="#15803D" opacity=".9"/><circle cx="65" cy="45" r="10" fill="#166534"/><circle cx="55" cy="72" r="5" fill="#F4722B" opacity=".9"/><circle cx="75" cy="68" r="4" fill="#F4722B" opacity=".9"/><circle cx="68" cy="82" r="5" fill="#F4722B" opacity=".8"/></svg></div>
+      <!-- duplicate -->
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#F5ECD7"/><rect x="70" y="50" width="60" height="70" rx="6" fill="#D2691E" opacity=".8"/><rect x="80" y="30" width="40" height="25" rx="4" fill="#C8A882"/><rect x="55" y="20" width="90" height="14" rx="7" fill="#8B6914"/><circle cx="100" cy="80" r="8" fill="#8B6914" opacity=".6"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#E8F8E8"/><path d="M20 100 Q65 20 110 100" fill="#6DB56D" opacity=".4"/><circle cx="55" cy="50" r="12" fill="#F4722B" opacity=".85"/><circle cx="80" cy="38" r="9" fill="#FBBF24" opacity=".9"/><circle cx="38" cy="68" r="8" fill="#FFB7C5" opacity=".9"/></svg></div>
+      <div class="art-card sq"><svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"><rect width="130" height="130" fill="#1A3A2A"/><circle cx="65" cy="55" r="28" fill="#FBBF24" opacity=".9"/><ellipse cx="65" cy="55" rx="14" ry="14" fill="#F4722B" opacity=".85"/><circle cx="65" cy="55" r="6" fill="#2D2D2D"/></svg></div>
+      <div class="art-card wide"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#F0F4FF"/><rect x="0" y="80" width="200" height="50" fill="#8EC5FC" opacity=".5"/><circle cx="150" cy="40" r="22" fill="#FCD34D" opacity=".9"/><path d="M10 65 Q30 50 50 60 Q70 70 90 55" stroke="white" stroke-width="3" fill="none" opacity=".6"/></svg></div>
+    </div>
+  </div>
+
+  <p class="hero-intro">
+    Welcome to <strong>Draw with Sang</strong> — a creative space where anyone can learn to draw, paint, and express themselves through art. From beginner pencil strokes to beautiful watercolors, every lesson is designed to be <strong>joyful, relaxing, and inspiring</strong>.
+  </p>
+</section>
+
+<!-- ═══ ABOUT ═══════════════════════════════════════════════ -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="about-header reveal">
+      <div class="section-tag">✦ Meet the Artist</div>
+      <h2 class="section-title">About Sang</h2>
+      <p class="section-sub">An artist, educator, and lifelong lover of sketchbooks, cozy cafés, and the magic of putting pencil to paper.</p>
+    </div>
+
+    <div class="about-grid" style="margin-top:48px">
+      <!-- Images -->
+      <div class="about-images reveal">
+        <div class="about-img">
+          <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;aspect-ratio:3/4">
+            <rect width="180" height="240" fill="#EDE7DF"/>
+            <!-- Body -->
+            <ellipse cx="90" cy="175" rx="55" ry="50" fill="#F4722B" opacity=".9"/>
+            <!-- Head -->
+            <circle cx="90" cy="100" r="42" fill="#F5CBA7"/>
+            <!-- Hair -->
+            <ellipse cx="90" cy="75" rx="42" ry="28" fill="#3D2B1F"/>
+            <ellipse cx="60" cy="95" rx="12" ry="20" fill="#3D2B1F"/>
+            <ellipse cx="120" cy="95" rx="12" ry="20" fill="#3D2B1F"/>
+            <!-- Eyes -->
+            <ellipse cx="76" cy="100" rx="7" ry="8" fill="#2D2D2D"/>
+            <ellipse cx="104" cy="100" rx="7" ry="8" fill="#2D2D2D"/>
+            <circle cx="78" cy="97" r="2.5" fill="white"/>
+            <circle cx="106" cy="97" r="2.5" fill="white"/>
+            <!-- Smile -->
+            <path d="M78 114 Q90 124 102 114" stroke="#C9906A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <!-- Blush -->
+            <ellipse cx="68" cy="112" rx="10" ry="6" fill="#FFB7C5" opacity=".5"/>
+            <ellipse cx="112" cy="112" rx="10" ry="6" fill="#FFB7C5" opacity=".5"/>
+            <!-- Arms -->
+            <ellipse cx="44" cy="175" rx="16" ry="36" fill="#F4722B" opacity=".9" transform="rotate(-15 44 175)"/>
+            <ellipse cx="136" cy="175" rx="16" ry="36" fill="#F4722B" opacity=".9" transform="rotate(15 136 175)"/>
+            <!-- Cat held on left -->
+            <ellipse cx="36" cy="205" rx="18" ry="14" fill="#E8B89A"/>
+            <circle cx="36" cy="193" r="12" fill="#E8B89A"/>
+            <polygon points="28,184 24,172 32,181" fill="#C9906A"/>
+            <polygon points="44,184 48,172 40,181" fill="#C9906A"/>
+            <circle cx="32" cy="191" r="3" fill="#2D2D2D"/>
+            <circle cx="40" cy="191" r="3" fill="#2D2D2D"/>
+            <ellipse cx="36" cy="197" rx="3" ry="2" fill="#FFB7C5"/>
+            <!-- Hands -->
+            <ellipse cx="30" cy="210" rx="10" ry="8" fill="#F5CBA7"/>
+            <ellipse cx="142" cy="210" rx="10" ry="8" fill="#F5CBA7"/>
+            <!-- Text -->
+            <text x="90" y="232" text-anchor="middle" font-size="9" fill="#7A6A5E" font-family="Georgia">Sang &amp; her cat Mochi 🐱</text>
+          </svg>
+        </div>
+        <div class="about-img">
+          <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;aspect-ratio:3/4">
+            <rect width="180" height="240" fill="#2D1F14"/>
+            <!-- Shelves -->
+            <rect x="0" y="60" width="180" height="8" fill="#5C3A1E" opacity=".8"/>
+            <rect x="0" y="130" width="180" height="8" fill="#5C3A1E" opacity=".8"/>
+            <rect x="0" y="200" width="180" height="8" fill="#5C3A1E" opacity=".8"/>
+            <!-- Jars and tools on shelf 1 -->
+            <rect x="18" y="35" width="20" height="28" rx="4" fill="#F4722B" opacity=".8"/>
+            <rect x="48" y="40" width="16" height="22" rx="3" fill="#FBBF24" opacity=".8"/>
+            <rect x="72" y="30" width="22" height="32" rx="4" fill="#6DB56D" opacity=".8"/>
+            <!-- Brushes in jar -->
+            <rect x="108" y="20" width="24" height="42" rx="6" fill="#C8A882" opacity=".7"/>
+            <line x1="114" y1="18" x2="114" y2="2" stroke="#F4722B" stroke-width="2.5"/>
+            <line x1="120" y1="15" x2="120" y2="0" stroke="#FBBF24" stroke-width="2.5"/>
+            <line x1="126" y1="18" x2="126" y2="3" stroke="#6DB56D" stroke-width="2.5"/>
+            <line x1="132" y1="16" x2="132" y2="1" stroke="#C77DFF" stroke-width="2.5"/>
+            <!-- Artwork on shelf 2 -->
+            <rect x="12" y="100" width="38" height="30" rx="3" fill="#FDE8DA"/>
+            <ellipse cx="31" cy="112" rx="10" ry="8" fill="#F4722B" opacity=".6"/>
+            <rect x="58" y="95" width="30" height="35" rx="3" fill="#E8F4FF"/>
+            <circle cx="73" cy="110" r="10" fill="#4D96FF" opacity=".5"/>
+            <rect x="95" y="102" width="35" height="28" rx="3" fill="#E8F8E8"/>
+            <path d="M97 128 Q112 108 130 128" fill="#6DB56D" opacity=".6"/>
+            <rect x="138" y="98" width="28" height="32" rx="3" fill="#FFF3D4"/>
+            <circle cx="152" cy="112" r="9" fill="#FBBF24" opacity=".7"/>
+            <!-- Palette -->
+            <ellipse cx="90" cy="175" rx="40" ry="22" fill="#F5ECD7" opacity=".9"/>
+            <circle cx="68" cy="170" r="6" fill="#F4722B"/>
+            <circle cx="82" cy="162" r="6" fill="#FBBF24"/>
+            <circle cx="98" cy="162" r="6" fill="#6DB56D"/>
+            <circle cx="112" cy="170" r="6" fill="#4D96FF"/>
+            <circle cx="104" cy="180" r="6" fill="#C77DFF"/>
+            <circle cx="76" cy="180" r="6" fill="#FFB7C5"/>
+            <ellipse cx="90" cy="175" rx="12" ry="8" fill="#F5CBA7"/>
+            <text x="90" y="232" text-anchor="middle" font-size="9" fill="#C8A882" font-family="Georgia">The art studio ✨</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Info cards -->
+      <div class="about-right">
+        <div class="about-header reveal">
+          <div class="section-tag">✦ Who is Sang?</div>
+          <h2 class="section-title" style="font-size:2rem">Artist · Teacher<br>& Cat Mom 🐱</h2>
+          <p class="section-sub">Sang has been drawing since she could hold a pencil. Now she shares her love of art with thousands of students worldwide — online, at home, in pajamas.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="info-card reveal">
+            <div class="info-icon">🖌️</div>
+            <div>
+              <h4>10+ Years Experience</h4>
+              <p>Professional illustrator specializing in watercolor, gouache, and whimsical character design.</p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay:.08s">
+            <div class="info-icon">🎓</div>
+            <div>
+              <h4>3,000+ Students Taught</h4>
+              <p>Students across 40+ countries — all skill levels, from absolute beginners to aspiring illustrators.</p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay:.16s">
+            <div class="info-icon">🌸</div>
+            <div>
+              <h4>Warm Community</h4>
+              <p>A kind, supportive online community where students share art, get feedback, and grow together.</p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay:.24s">
+            <div class="info-icon">✨</div>
+            <div>
+              <h4>Personal Brand</h4>
+              <p>Known for cozy, aesthetic, handmade illustrations with a distinctly warm and joyful style.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE / VIDEO ═════════════════════════════════ -->
+<section style="padding:80px 56px;position:relative;z-index:1" id="experience">
+  <div class="experience-section">
+    <div class="reveal">
+      <h2 class="exp-title">Experience Drawing<br>at Draw with Sang ✦</h2>
+      <p class="exp-sub">Sit back, grab your sketchbook, and follow along with Sang's relaxing step-by-step tutorials. Each lesson is designed to feel like drawing with a friend.</p>
+    </div>
+
+    <div class="video-layout reveal">
+      <!-- Video Player -->
+      <div class="video-player">
+        <div class="video-thumb" id="videoThumb">
+          <svg viewBox="0 0 720 405" xmlns="http://www.w3.org/2000/svg" id="videoSvg">
+            <rect width="720" height="405" fill="#1A1208"/>
+            <rect x="0" y="0" width="720" height="405" fill="url(#vgrad)"/>
+            <defs>
+              <radialGradient id="vgrad" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#3D2B1F"/>
+                <stop offset="100%" stop-color="#1A1208"/>
+              </radialGradient>
+            </defs>
+            <!-- Animated drawing scene -->
+            <rect x="160" y="60" width="400" height="280" rx="12" fill="#FFFDF9" opacity=".95"/>
+            <!-- Paper texture lines -->
+            <line x1="180" y1="100" x2="540" y2="100" stroke="#EDE7DF" stroke-width="1"/>
+            <line x1="180" y1="120" x2="540" y2="120" stroke="#EDE7DF" stroke-width="1"/>
+            <line x1="180" y1="140" x2="540" y2="140" stroke="#EDE7DF" stroke-width="1"/>
+            <!-- Duck being drawn -->
+            <ellipse cx="360" cy="230" rx="70" ry="50" fill="#F9E04B" opacity=".9"/>
+            <circle cx="360" cy="165" r="38" fill="#F9E04B" opacity=".9"/>
+            <ellipse cx="388" cy="178" rx="22" ry="12" fill="#F4722B"/>
+            <circle cx="345" cy="155" r="8" fill="#2D2D2D"/>
+            <circle cx="346" cy="153" r="3" fill="white"/>
+            <ellipse cx="360" cy="285" rx="55" ry="15" fill="#8EC5FC" opacity=".4"/>
+            <!-- Pencil hand -->
+            <rect x="460" y="130" width="12" height="80" rx="4" fill="#FBBF24" transform="rotate(35 466 170)"/>
+            <polygon points="466,130 458,150 474,150" fill="#F5CBA7" transform="rotate(35 466 170) translate(0,-14)"/>
+            <!-- Title overlay -->
+            <text x="360" y="358" text-anchor="middle" font-size="14" fill="#7A6A5E" font-family="Georgia" font-style="italic">Lesson 1 — Drawing a Cute Duck 🐥</text>
+          </svg>
+          <div class="play-btn" onclick="playLesson()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M8 5l12 7-12 7V5z" fill="#F4722B"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-meta">
+          <div class="lesson-badge" id="lessonBadge">Lesson 1 · Beginner</div>
+          <h3 id="videoTitle">Drawing a Cute Duck in Watercolor</h3>
+          <p id="videoDesc">Learn to sketch and paint an adorable duck step-by-step using simple shapes and warm watercolors.</p>
+        </div>
+      </div>
+
+      <!-- Playlist -->
+      <div class="playlist">
+        <div class="playlist-header">
+          <h4>Course Lessons</h4>
+          <span>12 lessons</span>
+        </div>
+
+        <!-- Lessons -->
+        <div class="lesson-card active" onclick="selectLesson(this,0)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#D4EDD8"/><ellipse cx="38" cy="32" rx="16" ry="12" fill="#F9E04B"/><circle cx="38" cy="20" r="10" fill="#F9E04B"/><ellipse cx="45" cy="24" rx="7" ry="4" fill="#F4722B"/><circle cx="33" cy="16" r="3" fill="#2D2D2D"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 1</div>
+            <div class="lesson-title">Drawing a Cute Duck in Watercolor</div>
+            <div class="lesson-dur">⏱ 18 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,1)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><ellipse cx="38" cy="30" rx="18" ry="14" fill="#E8B89A"/><circle cx="38" cy="20" r="13" fill="#E8B89A"/><polygon points="30,12 26,4 34,10" fill="#C9906A"/><polygon points="46,12 50,4 42,10" fill="#C9906A"/><ellipse cx="34" cy="18" rx="3" ry="4" fill="#2D2D2D"/><ellipse cx="42" cy="18" rx="3" ry="4" fill="#2D2D2D"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 2</div>
+            <div class="lesson-title">Fluffy Cat Portrait — Pencil &amp; Ink</div>
+            <div class="lesson-dur">⏱ 24 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,2)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF3D4"/><line x1="38" y1="48" x2="38" y2="26" stroke="#6DB56D" stroke-width="3"/><circle cx="38" cy="22" r="11" fill="#FBBF24"/><circle cx="38" cy="12" r="6" fill="#F4722B"/><circle cx="49" cy="16" r="6" fill="#F4722B"/><circle cx="49" cy="28" r="6" fill="#F4722B"/><circle cx="38" cy="32" r="6" fill="#F4722B"/><circle cx="27" cy="28" r="6" fill="#F4722B"/><circle cx="27" cy="16" r="6" fill="#F4722B"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 3</div>
+            <div class="lesson-title">Wildflowers — Loose Watercolor Style</div>
+            <div class="lesson-dur">⏱ 31 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,3)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#E8F4FF"/><ellipse cx="38" cy="36" rx="18" ry="13" fill="#F0E6FF"/><circle cx="38" cy="25" r="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="46" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="3" ry="8" fill="#FFB7C5"/><ellipse cx="46" cy="10" rx="3" ry="8" fill="#FFB7C5"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 4</div>
+            <div class="lesson-title">Bunny in a Garden — Gouache Painting</div>
+            <div class="lesson-dur">⏱ 27 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,4)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#C8E6F7"/><rect y="34" width="76" height="18" fill="#6DB56D"/><polygon points="20,34 32,12 44,34" fill="#8B4513"/><polygon points="14,34 28,5 42,34" fill="#A0522D"/><circle cx="58" cy="14" r="10" fill="#FBBF24"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 5</div>
+            <div class="lesson-title">Cozy Landscape at Sunset</div>
+            <div class="lesson-dur">⏱ 38 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,5)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF8F0"/><ellipse cx="28" cy="28" rx="16" ry="13" fill="#F4722B" opacity=".3"/><ellipse cx="44" cy="30" rx="14" ry="11" fill="#FBBF24" opacity=".4"/><ellipse cx="36" cy="36" rx="12" ry="9" fill="#F99A64" opacity=".5"/><ellipse cx="52" cy="22" rx="11" ry="8" fill="#FFB7C5" opacity=".5"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 6</div>
+            <div class="lesson-title">Abstract Watercolor Blending</div>
+            <div class="lesson-dur">⏱ 22 min</div>
+          </div>
+        </div>
+
+        <div class="lesson-card" onclick="selectLesson(this,6)">
+          <div class="lesson-thumb">
+            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><rect x="22" y="20" width="32" height="26" rx="5" fill="#F4722B" opacity=".8"/><rect x="28" y="10" width="20" height="14" rx="3" fill="#C8A882"/><path d="M36 24 Q38 20 40 24" stroke="white" stroke-width="1.5" fill="none"/></svg>
+          </div>
+          <div>
+            <div class="lesson-num">LESSON 7</div>
+            <div class="lesson-title">Cozy Café Illustration</div>
+            <div class="lesson-dur">⏱ 35 min</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
+<footer>
+  <span class="foot-logo">Draw with Sang ✦</span>
+  <p>A cozy corner of the internet for artists of all levels. Learn to draw, make friends, and fall in love with art — one stroke at a time.</p>
+  <div class="foot-links">
+    <a href="#">Courses</a>
+    <a href="#">Community</a>
+    <a href="#">Gallery</a>
+    <a href="#">Blog</a>
+    <a href="#">Instagram</a>
+    <a href="#">Contact</a>
+  </div>
+  <p class="copy">© 2025 Draw with Sang — Made with 🧡 and lots of watercolor</p>
+</footer>
+
+<script>
+/* ── Scroll reveal ─────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}
+  });
+},{threshold:.12});
+revealEls.forEach(el=>ro.observe(el));
+
+/* ── Lesson data ───────────────────────────── */
+const lessons=[
+  {badge:'Lesson 1 · Beginner',title:'Drawing a Cute Duck in Watercolor',desc:'Learn to sketch and paint an adorable duck step-by-step using simple shapes and warm watercolors.'},
+  {badge:'Lesson 2 · Beginner',title:'Fluffy Cat Portrait — Pencil & Ink',desc:'Build a charming cat portrait using confident pencil lines and ink detail work.'},
+  {badge:'Lesson 3 · Beginner',title:'Wildflowers — Loose Watercolor Style',desc:'Paint a beautiful loose floral bouquet with gestural, expressive watercolor strokes.'},
+  {badge:'Lesson 4 · Intermediate',title:'Bunny in a Garden — Gouache Painting',desc:'Create a lush garden scene featuring a sleepy bunny in opaque gouache.'},
+  {badge:'Lesson 5 · Intermediate',title:'Cozy Landscape at Sunset',desc:'Capture a warm golden-hour landscape with layered washes and atmospheric depth.'},
+  {badge:'Lesson 6 · Beginner',title:'Abstract Watercolor Blending',desc:'Explore wet-on-wet blending techniques to create dreamy, abstract color fields.'},
+  {badge:'Lesson 7 · Intermediate',title:'Cozy Café Illustration',desc:'Illustrate a warm, inviting café scene full of charm and everyday magic.'},
+];
+
+function selectLesson(card,idx){
+  document.querySelectorAll('.lesson-card').forEach(c=>c.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('lessonBadge').textContent=lessons[idx].badge;
+  document.getElementById('videoTitle').textContent=lessons[idx].title;
+  document.getElementById('videoDesc').textContent=lessons[idx].desc;
+}
+
+function playLesson(){
+  const btn=document.querySelector('.play-btn');
+  btn.style.opacity='0';
+  btn.style.transform='scale(1.3)';
+  setTimeout(()=>{btn.style.opacity='1';btn.style.transform='scale(1)';},600);
+}
+</script>
+</body>
+</html>
