@@ -570,7 +570,7 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 .fb-fab{
   position:fixed;
   bottom:28px;
-  right:176px; /* sits left of Messenger */
+  right:176px;
   z-index:9999;
   display:flex;align-items:center;gap:10px;
   background:linear-gradient(135deg,#1877F2 0%,#1458c4 100%);
@@ -599,6 +599,103 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   .fb-fab{bottom:82px;right:0;font-size:.84rem;padding:11px 16px 11px 13px}
   .messenger-fab{bottom:28px;right:0;font-size:.84rem;padding:11px 16px 11px 13px}
 }
+
+/* ─── COURSES SECTION ───────────────────────────────────── */
+.courses-section{
+  background:var(--bg2);
+  border-radius:40px;
+  margin:0 32px;
+  padding:72px 56px 80px;
+}
+.courses-header{margin-bottom:52px}
+.courses-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+.course-card{
+  background:var(--white);
+  border-radius:24px;
+  padding:28px 24px 24px;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:14px;
+  cursor:pointer;
+  text-decoration:none;color:inherit;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s;
+  position:relative;
+  overflow:hidden;
+}
+.course-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(244,114,43,.06) 0%,transparent 60%);
+  opacity:0;transition:opacity .28s;
+}
+.course-card:hover{transform:translateY(-7px) scale(1.02);box-shadow:var(--shadow-lg)}
+.course-card:hover::before{opacity:1}
+.course-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.course-emoji{
+  font-size:2.4rem;line-height:1;
+  flex-shrink:0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.1));
+}
+.course-badge{
+  font-size:.68rem;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;
+  padding:4px 12px;border-radius:50px;
+  white-space:nowrap;flex-shrink:0;
+}
+.course-badge.age-k  {background:#FDE8DA;color:#E05A00}
+.course-badge.age-e  {background:#E8F8E8;color:#2E7D32}
+.course-badge.age-m  {background:#E3F0FF;color:#1565C0}
+.course-badge.age-h  {background:#F3E5F5;color:#7B1FA2}
+.course-badge.age-u  {background:#FFF8E1;color:#F57F17}
+.course-badge.age-g  {background:#FCE4EC;color:#C62828}
+.course-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.12rem;font-weight:900;
+  color:var(--brown);line-height:1.25;
+}
+.course-desc{font-size:.83rem;color:var(--warm-gray);line-height:1.65;flex:1}
+.course-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:4px;padding-top:14px;
+  border-top:1px solid var(--bg2);
+}
+.course-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.course-tag{
+  font-size:.7rem;font-weight:700;
+  padding:3px 10px;border-radius:50px;
+  background:var(--bg2);color:var(--warm-gray);
+}
+.course-cta{
+  display:flex;align-items:center;gap:5px;
+  font-size:.78rem;font-weight:800;
+  color:var(--orange);
+  transition:gap .2s;
+}
+.course-card:hover .course-cta{gap:8px}
+.course-cta svg{transition:transform .2s}
+.course-card:hover .course-cta svg{transform:translateX(3px)}
+
+/* accent bar at top of card */
+.course-card::after{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:4px;
+  border-radius:24px 24px 0 0;
+  opacity:.7;
+}
+.course-card.ck::after{background:linear-gradient(90deg,#F4722B,#F99A64)}
+.course-card.ce::after{background:linear-gradient(90deg,#4CAF50,#81C784)}
+.course-card.cm::after{background:linear-gradient(90deg,#2196F3,#64B5F6)}
+.course-card.ch::after{background:linear-gradient(90deg,#9C27B0,#CE93D8)}
+.course-card.cu::after{background:linear-gradient(90deg,#FF9800,#FFB74D)}
+.course-card.cg::after{background:linear-gradient(90deg,#E91E63,#F48FB1)}
+
+@media(max-width:960px){.courses-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+  .courses-grid{grid-template-columns:1fr}
+  .courses-section{margin:0 12px;padding:48px 24px 56px}
+}
 </style>
 </head>
 <body>
@@ -611,11 +708,11 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   </a>
   <ul class="nav-links">
     <li><a href="#about">Giới thiệu</a></li>
-    <li><a href="#experience">Khóa học</a></li>
-    <li><a href="#experience">Thư viện</a></li>
-    <li><a href="#">Cộng đồng</a></li>
+    <li><a href="#courses">Khóa học</a></li>
+    <li><a href="#experience">Video</a></li>
+    <li><a href="#" id="navContactTrigger" onclick="openContactFromNav(event)">Liên hệ</a></li>
   </ul>
-  <a href="#experience" class="nav-cta">Bắt đầu Vẽ ✦</a>
+  <a href="#courses" class="nav-cta">Bắt đầu Vẽ ✦</a>
 </nav>
 
 <!-- ═══ HERO ═══════════════════════════════════════════════ -->
@@ -828,158 +925,133 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   </div>
 </section>
 
-<!-- ═══ EXPERIENCE / VIDEO ═════════════════════════════════ -->
-<section style="padding:80px 56px;position:relative;z-index:1" id="experience">
-  <div class="experience-section">
-    <div class="reveal">
-      <h2 class="exp-title">Trải nghiệm Vẽ<br>cùng Draw with Sang ✦</h2>
-      <p class="exp-sub">Ngả lưng, lấy sổ vẽ ra và theo dõi các hướng dẫn từng bước thư giãn của Sang. Mỗi bài học được thiết kế như đang vẽ cùng một người bạn.</p>
+<!-- ═══ COURSES SECTION ════════════════════════════════════ -->
+<section style="padding:80px 56px;position:relative;z-index:1" id="courses">
+  <div class="courses-section">
+    <div class="courses-header reveal">
+      <div class="section-tag">✦ Chương trình Giảng dạy</div>
+      <h2 class="exp-title">Khóa học Vẽ<br>dành cho mọi lứa tuổi ✦</h2>
+      <p class="exp-sub">Từ những nét bút đầu tiên của bé mầm non đến kỹ thuật chuyên sâu cho học sinh chuyên — mỗi khóa học được thiết kế riêng biệt, phù hợp với từng giai đoạn phát triển.</p>
     </div>
 
-    <div class="video-layout reveal">
-      <!-- Video Player -->
-      <div class="video-player">
-        <div class="video-thumb" id="videoThumb">
-          <svg viewBox="0 0 720 405" xmlns="http://www.w3.org/2000/svg" id="videoSvg">
-            <rect width="720" height="405" fill="#1A1208"/>
-            <rect x="0" y="0" width="720" height="405" fill="url(#vgrad)"/>
-            <defs>
-              <radialGradient id="vgrad" cx="50%" cy="50%">
-                <stop offset="0%" stop-color="#3D2B1F"/>
-                <stop offset="100%" stop-color="#1A1208"/>
-              </radialGradient>
-            </defs>
-            <!-- Animated drawing scene -->
-            <rect x="160" y="60" width="400" height="280" rx="12" fill="#FFFDF9" opacity=".95"/>
-            <!-- Paper texture lines -->
-            <line x1="180" y1="100" x2="540" y2="100" stroke="#EDE7DF" stroke-width="1"/>
-            <line x1="180" y1="120" x2="540" y2="120" stroke="#EDE7DF" stroke-width="1"/>
-            <line x1="180" y1="140" x2="540" y2="140" stroke="#EDE7DF" stroke-width="1"/>
-            <!-- Duck being drawn -->
-            <ellipse cx="360" cy="230" rx="70" ry="50" fill="#F9E04B" opacity=".9"/>
-            <circle cx="360" cy="165" r="38" fill="#F9E04B" opacity=".9"/>
-            <ellipse cx="388" cy="178" rx="22" ry="12" fill="#F4722B"/>
-            <circle cx="345" cy="155" r="8" fill="#2D2D2D"/>
-            <circle cx="346" cy="153" r="3" fill="white"/>
-            <ellipse cx="360" cy="285" rx="55" ry="15" fill="#8EC5FC" opacity=".4"/>
-            <!-- Pencil hand -->
-            <rect x="460" y="130" width="12" height="80" rx="4" fill="#FBBF24" transform="rotate(35 466 170)"/>
-            <polygon points="466,130 458,150 474,150" fill="#F5CBA7" transform="rotate(35 466 170) translate(0,-14)"/>
-            <!-- Title overlay -->
-            <text x="360" y="358" text-anchor="middle" font-size="14" fill="#7A6A5E" font-family="Georgia" font-style="italic">Lesson 1 — Drawing a Cute Duck 🐥</text>
-          </svg>
-          <div class="play-btn" onclick="playLesson()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M8 5l12 7-12 7V5z" fill="#F4722B"/>
-            </svg>
-          </div>
-        </div>
-        <div class="video-meta">
-          <div class="lesson-badge" id="lessonBadge">Bài 1 · Cơ bản</div>
-          <h3 id="videoTitle">Vẽ Chú Vịt Dễ Thương bằng Màu nước</h3>
-          <p id="videoDesc">Học cách phác thảo và tô màu chú vịt đáng yêu từng bước bằng hình khối đơn giản và màu nước ấm áp.</p>
-        </div>
-      </div>
+    <div class="courses-grid">
 
-      <!-- Playlist -->
-      <div class="playlist">
-        <div class="playlist-header">
-          <h4>Bài học trong khóa</h4>
-          <span>12 bài học</span>
+      <!-- Mầm non -->
+      <a href="#courses" class="course-card ck reveal" style="transition-delay:.04s">
+        <div class="course-card-top">
+          <div class="course-emoji">🐣</div>
+          <span class="course-badge age-k">3 – 5 tuổi</span>
         </div>
-
-        <!-- Lessons -->
-        <div class="lesson-card active" onclick="selectLesson(this,0)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#D4EDD8"/><ellipse cx="38" cy="32" rx="16" ry="12" fill="#F9E04B"/><circle cx="38" cy="20" r="10" fill="#F9E04B"/><ellipse cx="45" cy="24" rx="7" ry="4" fill="#F4722B"/><circle cx="33" cy="16" r="3" fill="#2D2D2D"/></svg>
+        <div class="course-title">Vẽ Vui cùng Bé Mầm Non</div>
+        <div class="course-desc">Khóa học đặc biệt thiết kế cho các bé 3–5 tuổi với hình ảnh ngộ nghĩnh, màu sắc tươi tắn. Giúp bé phát triển tư duy sáng tạo, khéo léo đôi tay và tình yêu nghệ thuật từ rất sớm.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">🖍 Màu sáp</span>
+            <span class="course-tag">🎨 Tô màu</span>
           </div>
-          <div>
-            <div class="lesson-num">BÀI 1</div>
-            <div class="lesson-title">Vẽ Chú Vịt Dễ Thương bằng Màu nước</div>
-            <div class="lesson-dur">⏱ 18 phút</div>
-          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         </div>
+      </a>
 
-        <div class="lesson-card" onclick="selectLesson(this,1)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><ellipse cx="38" cy="30" rx="18" ry="14" fill="#E8B89A"/><circle cx="38" cy="20" r="13" fill="#E8B89A"/><polygon points="30,12 26,4 34,10" fill="#C9906A"/><polygon points="46,12 50,4 42,10" fill="#C9906A"/><ellipse cx="34" cy="18" rx="3" ry="4" fill="#2D2D2D"/><ellipse cx="42" cy="18" rx="3" ry="4" fill="#2D2D2D"/></svg>
-          </div>
-          <div>
-            <div class="lesson-num">BÀI 2</div>
-            <div class="lesson-title">Chân dung Mèo Bông — Bút chì &amp; Mực</div>
-            <div class="lesson-dur">⏱ 24 phút</div>
-          </div>
+      <!-- Tiểu học -->
+      <a href="#courses" class="course-card ce reveal" style="transition-delay:.08s">
+        <div class="course-card-top">
+          <div class="course-emoji">🌱</div>
+          <span class="course-badge age-e">6 – 11 tuổi</span>
         </div>
-
-        <div class="lesson-card" onclick="selectLesson(this,2)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF3D4"/><line x1="38" y1="48" x2="38" y2="26" stroke="#6DB56D" stroke-width="3"/><circle cx="38" cy="22" r="11" fill="#FBBF24"/><circle cx="38" cy="12" r="6" fill="#F4722B"/><circle cx="49" cy="16" r="6" fill="#F4722B"/><circle cx="49" cy="28" r="6" fill="#F4722B"/><circle cx="38" cy="32" r="6" fill="#F4722B"/><circle cx="27" cy="28" r="6" fill="#F4722B"/><circle cx="27" cy="16" r="6" fill="#F4722B"/></svg>
+        <div class="course-title">Nghệ Thuật Tiểu Học</div>
+        <div class="course-desc">Dành cho học sinh tiểu học muốn học vẽ cơ bản một cách vui vẻ và bài bản. Bé được học hình khối, phối màu và tạo ra những tác phẩm đáng tự hào để treo ở nhà.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">✏️ Bút chì</span>
+            <span class="course-tag">🌈 Màu nước</span>
           </div>
-          <div>
-            <div class="lesson-num">BÀI 3</div>
-            <div class="lesson-title">Hoa Dại — Phong cách Màu nước Tự do</div>
-            <div class="lesson-dur">⏱ 31 phút</div>
-          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         </div>
+      </a>
 
-        <div class="lesson-card" onclick="selectLesson(this,3)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#E8F4FF"/><ellipse cx="38" cy="36" rx="18" ry="13" fill="#F0E6FF"/><circle cx="38" cy="25" r="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="46" cy="10" rx="5" ry="13" fill="#F0E6FF"/><ellipse cx="30" cy="10" rx="3" ry="8" fill="#FFB7C5"/><ellipse cx="46" cy="10" rx="3" ry="8" fill="#FFB7C5"/></svg>
-          </div>
-          <div>
-            <div class="lesson-num">BÀI 4</div>
-            <div class="lesson-title">Thỏ trong Vườn — Tranh Gouache</div>
-            <div class="lesson-dur">⏱ 27 phút</div>
-          </div>
+      <!-- THCS -->
+      <a href="#courses" class="course-card cm reveal" style="transition-delay:.12s">
+        <div class="course-card-top">
+          <div class="course-emoji">🎨</div>
+          <span class="course-badge age-m">12 – 15 tuổi</span>
         </div>
-
-        <div class="lesson-card" onclick="selectLesson(this,4)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#C8E6F7"/><rect y="34" width="76" height="18" fill="#6DB56D"/><polygon points="20,34 32,12 44,34" fill="#8B4513"/><polygon points="14,34 28,5 42,34" fill="#A0522D"/><circle cx="58" cy="14" r="10" fill="#FBBF24"/></svg>
+        <div class="course-title">Vẽ Sáng Tạo THCS</div>
+        <div class="course-desc">Khóa học cho học sinh THCS muốn nâng cao kỹ năng vẽ, khám phá phong cách cá nhân. Từ ký họa nhanh đến tranh màu nước, minh họa nhân vật và thiết kế tự do.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">🖊 Ký họa</span>
+            <span class="course-tag">🎭 Nhân vật</span>
           </div>
-          <div>
-            <div class="lesson-num">BÀI 5</div>
-            <div class="lesson-title">Phong cảnh Ấm áp lúc Hoàng hôn</div>
-            <div class="lesson-dur">⏱ 38 phút</div>
-          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         </div>
+      </a>
 
-        <div class="lesson-card" onclick="selectLesson(this,5)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FFF8F0"/><ellipse cx="28" cy="28" rx="16" ry="13" fill="#F4722B" opacity=".3"/><ellipse cx="44" cy="30" rx="14" ry="11" fill="#FBBF24" opacity=".4"/><ellipse cx="36" cy="36" rx="12" ry="9" fill="#F99A64" opacity=".5"/><ellipse cx="52" cy="22" rx="11" ry="8" fill="#FFB7C5" opacity=".5"/></svg>
-          </div>
-          <div>
-            <div class="lesson-num">BÀI 6</div>
-            <div class="lesson-title">Hòa màu Màu nước Trừu tượng</div>
-            <div class="lesson-dur">⏱ 22 phút</div>
-          </div>
+      <!-- THPT -->
+      <a href="#courses" class="course-card ch reveal" style="transition-delay:.16s">
+        <div class="course-card-top">
+          <div class="course-emoji">🖌️</div>
+          <span class="course-badge age-h">15 – 18 tuổi</span>
         </div>
-
-        <div class="lesson-card" onclick="selectLesson(this,6)">
-          <div class="lesson-thumb">
-            <svg viewBox="0 0 76 52" xmlns="http://www.w3.org/2000/svg"><rect width="76" height="52" fill="#FDE8DA"/><rect x="22" y="20" width="32" height="26" rx="5" fill="#F4722B" opacity=".8"/><rect x="28" y="10" width="20" height="14" rx="3" fill="#C8A882"/><path d="M36 24 Q38 20 40 24" stroke="white" stroke-width="1.5" fill="none"/></svg>
+        <div class="course-title">Mỹ Thuật THPT Chuyên Sâu</div>
+        <div class="course-desc">Chương trình chuyên sâu giúp học sinh THPT hoàn thiện kỹ năng hội họa, xây dựng portfolio cá nhân và định hướng nghề nghiệp trong ngành mỹ thuật — thiết kế.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">🗂 Portfolio</span>
+            <span class="course-tag">🖼 Hội họa</span>
           </div>
-          <div>
-            <div class="lesson-num">BÀI 7</div>
-            <div class="lesson-title">Minh họa Quán Cà Phê Ấm cúng</div>
-            <div class="lesson-dur">⏱ 35 phút</div>
-          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         </div>
+      </a>
 
-      </div>
+      <!-- Luyện thi ĐH -->
+      <a href="#courses" class="course-card cu reveal" style="transition-delay:.20s">
+        <div class="course-card-top">
+          <div class="course-emoji">🏆</div>
+          <span class="course-badge age-u">Luyện thi ĐH</span>
+        </div>
+        <div class="course-title">Luyện Thi Đại Học Mỹ Thuật</div>
+        <div class="course-desc">Khóa luyện thi chuyên biệt cho kỳ thi tuyển sinh các trường Mỹ Thuật, Kiến Trúc, Sư Phạm Mỹ Thuật. Học đúng trọng tâm, luyện đề thực chiến và được hướng dẫn cá nhân hóa.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">📝 Luyện đề</span>
+            <span class="course-tag">🎯 Thi cử</span>
+          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        </div>
+      </a>
+
+      <!-- Trường chuyên -->
+      <a href="#courses" class="course-card cg reveal" style="transition-delay:.24s">
+        <div class="course-card-top">
+          <div class="course-emoji">⭐</div>
+          <span class="course-badge age-g">Trường chuyên</span>
+        </div>
+        <div class="course-title">Bồi Dưỡng Năng Khiếu Chuyên</div>
+        <div class="course-desc">Chương trình bồi dưỡng đặc biệt cho học sinh trường chuyên, năng khiếu. Rèn kỹ thuật nâng cao, tư duy thẩm mỹ và phong cách nghệ thuật riêng để chuẩn bị cho các cuộc thi quốc gia và quốc tế.</div>
+        <div class="course-footer">
+          <div class="course-meta">
+            <span class="course-tag">🌟 Nâng cao</span>
+            <span class="course-tag">🏅 Thi HS Giỏi</span>
+          </div>
+          <div class="course-cta">Xem thêm <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#F4722B" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE / VIDEO ═════════════════════════════════ -->
+<section style="padding:80px 56px 40px;position:relative;z-index:1" id="experience">
+  <div class="experience-section">
+    <div class="reveal">
+      <h2 class="exp-title">Video &amp; Cảm hứng ✦</h2>
+      <p class="exp-sub">Những video thư giãn, chill và đầy màu sắc — xem ngay trên trang, không cần rời đi đâu cả. Theo dõi Sang vẽ từng bước một nhé!</p>
     </div>
 
     <!-- ─── YOUTUBE VIDEOS ─────────────────────────────── -->
-    <div class="yt-divider reveal">
-      <div class="yt-divider-line"></div>
-      <div class="yt-divider-label">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" fill="#FF0000" opacity=".9"/><polygon points="10,8 16,12 10,16" fill="white"/></svg>
-        Video &amp; Cảm hứng
-      </div>
-      <div class="yt-divider-line"></div>
-    </div>
-
-    <div class="yt-grid reveal">
+    <div class="yt-grid reveal" style="margin-top:40px">
       <!-- Video 1 — featured, spans 2 cols -->
       <div class="yt-card yt-featured">
         <div class="yt-ratio">
@@ -1060,15 +1132,15 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   <span class="foot-logo">Vẽ cùng Sang ✦</span>
   <p>Góc nhỏ ấm cúng trên Internet dành cho những người yêu nghệ thuật ở mọi trình độ. Học vẽ, kết bạn và yêu nghệ thuật — từng nét bút một.</p>
   <div class="foot-links">
-    <a href="#">Khóa học</a>
+    <a href="#courses">Khóa học</a>
     <span class="community-link-wrap">
-      <a href="#" id="communityTrigger" onclick="toggleCommunity(event)" aria-expanded="false" aria-haspopup="true">Cộng đồng</a>
+      <a href="#" id="communityTrigger" onclick="toggleCommunity(event)" aria-expanded="false" aria-haspopup="true">Liên hệ</a>
       <div class="community-panel" id="communityPanel" role="dialog" aria-label="Thông tin liên hệ">
         <div class="cp-head">
-          <div class="cp-head-icon">🌸</div>
+          <div class="cp-head-icon">📬</div>
           <div class="cp-head-text">
             <h4>Liên hệ với Sang</h4>
-            <p>Luôn sẵn sàng trò chuyện!</p>
+            <p>Luôn sẵn sàng tư vấn &amp; hỗ trợ!</p>
           </div>
         </div>
         <div class="cp-body">
@@ -1092,24 +1164,24 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
               <div class="cp-item-val">0798 754 901</div>
             </div>
           </div>
-          <!-- Facebook -->
+          <!-- Facebook Group -->
           <div class="cp-item cp-link" role="button" tabindex="0"
-               onclick="window.open('https://www.facebook.com/sang.dzjm','_blank')"
-               onkeydown="if(event.key==='Enter')window.open('https://www.facebook.com/sang.dzjm','_blank')">
+               onclick="window.open('https://www.facebook.com/groups/861108920047086','_blank')"
+               onkeydown="if(event.key==='Enter')window.open('https://www.facebook.com/groups/861108920047086','_blank')">
             <div class="cp-item-icon ci-fb">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#1877F2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div>
-              <div class="cp-item-lbl">Facebook</div>
-              <div class="cp-item-val">sang.dzjm</div>
+              <div class="cp-item-lbl">Facebook Group</div>
+              <div class="cp-item-val">Cộng đồng Vẽ cùng Sang</div>
             </div>
             <svg class="cp-item-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
           </div>
         </div>
       </div>
     </span>
-    <a href="#">Thư viện</a>
-    <a href="#">Blog</a>
+    <a href="#experience">Video</a>
+    <a href="#about">Blog</a>
     <a href="#">Zalo</a>
     <a href="#">Liên hệ</a>
   </div>
@@ -1139,7 +1211,7 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 </button>
 
 <!-- ═══ FACEBOOK FLOATING BUTTON ════════════════════════ -->
-<a class="fb-fab" href="https://www.facebook.com/sang.dzjm" target="_blank" rel="noopener" aria-label="Mở Facebook">
+<a class="fb-fab" href="https://www.facebook.com/groups/861108920047086" target="_blank" rel="noopener" aria-label="Tham gia nhóm Facebook">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="white"/>
   </svg>
@@ -1201,33 +1273,7 @@ const ro = new IntersectionObserver(entries=>{
 },{threshold:.12});
 revealEls.forEach(el=>ro.observe(el));
 
-/* ── Lesson data ───────────────────────────── */
-const lessons=[
-  {badge:'Bài 1 · Cơ bản',title:'Vẽ Chú Vịt Dễ Thương bằng Màu nước',desc:'Học cách phác thảo và tô màu chú vịt đáng yêu từng bước bằng hình khối đơn giản và màu nước ấm áp.'},
-  {badge:'Bài 2 · Cơ bản',title:'Chân dung Mèo Bông — Bút chì & Mực',desc:'Xây dựng chân dung mèo duyên dáng bằng những nét bút chì tự tin và chi tiết mực.'},
-  {badge:'Bài 3 · Cơ bản',title:'Hoa Dại — Phong cách Màu nước Tự do',desc:'Vẽ bó hoa dại tuyệt đẹp với những nét màu nước biểu cảm và phóng khoáng.'},
-  {badge:'Bài 4 · Trung cấp',title:'Thỏ trong Vườn — Tranh Gouache',desc:'Tạo cảnh vườn tươi tốt với chú thỏ đang ngủ bằng màu gouache không trong suốt.'},
-  {badge:'Bài 5 · Trung cấp',title:'Phong cảnh Ấm áp lúc Hoàng hôn',desc:'Ghi lại phong cảnh ánh vàng hoàng hôn với các lớp màu nước và chiều sâu không khí.'},
-  {badge:'Bài 6 · Cơ bản',title:'Hòa màu Màu nước Trừu tượng',desc:'Khám phá kỹ thuật hòa màu ướt-trên-ướt để tạo ra những cánh đồng màu sắc mơ màng, trừu tượng.'},
-  {badge:'Bài 7 · Trung cấp',title:'Minh họa Quán Cà Phê Ấm cúng',desc:'Minh họa cảnh quán cà phê ấm áp, đầy quyến rũ và phép màu của cuộc sống thường ngày.'},
-];
-
-function selectLesson(card,idx){
-  document.querySelectorAll('.lesson-card').forEach(c=>c.classList.remove('active'));
-  card.classList.add('active');
-  document.getElementById('lessonBadge').textContent=lessons[idx].badge;
-  document.getElementById('videoTitle').textContent=lessons[idx].title;
-  document.getElementById('videoDesc').textContent=lessons[idx].desc;
-}
-
-function playLesson(){
-  const btn=document.querySelector('.play-btn');
-  btn.style.opacity='0';
-  btn.style.transform='scale(1.3)';
-  setTimeout(()=>{btn.style.opacity='1';btn.style.transform='scale(1)';},600);
-}
-
-/* ── Community panel ──────────────────────────────────── */
+/* ── Community / Contact panel ────────────────────────── */
 function toggleCommunity(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -1237,6 +1283,22 @@ function toggleCommunity(e) {
   panel.classList.toggle('cp-open', !isOpen);
   trigger.setAttribute('aria-expanded', String(!isOpen));
 }
+
+/* Open contact panel from nav "Liên hệ" link — scroll to footer first */
+function openContactFromNav(e) {
+  e.preventDefault();
+  const footer = document.querySelector('footer');
+  footer.scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const panel   = document.getElementById('communityPanel');
+    const trigger = document.getElementById('communityTrigger');
+    if (!panel.classList.contains('cp-open')) {
+      panel.classList.add('cp-open');
+      trigger.setAttribute('aria-expanded','true');
+    }
+  }, 600);
+}
+
 document.addEventListener('click', function(e) {
   const panel   = document.getElementById('communityPanel');
   const trigger = document.getElementById('communityTrigger');
