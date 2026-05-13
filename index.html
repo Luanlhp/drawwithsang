@@ -361,6 +361,8 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   bottom: 28px;
   right: 28px;
   z-index: 9999;
+  /* for badge dot child positioning */
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -403,6 +405,199 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   .experience-section{margin:0 12px;padding:48px 28px}
   .art-card.sq{width:100px;height:100px}
   .art-card.wide{width:155px;height:100px}
+  .yt-grid{grid-template-columns:1fr 1fr}
+  .yt-card.yt-featured{grid-column:span 2}
+}
+@media(max-width:560px){
+  .yt-grid{grid-template-columns:1fr}
+  .yt-card.yt-featured{grid-column:span 1}
+}
+
+/* ─── MESSENGER NOTIFICATION POPUP ─────────────────────── */
+.msn-notif{
+  position:fixed;
+  bottom:88px;
+  right:28px;
+  z-index:9998;
+  max-width:272px;
+  background:#fff;
+  border-radius:18px 18px 4px 18px;
+  padding:13px 38px 13px 14px;
+  box-shadow:0 8px 36px rgba(0,0,0,.16),0 2px 8px rgba(0,132,255,.12);
+  display:flex;align-items:flex-start;gap:10px;
+  /* hidden state */
+  opacity:0;
+  transform:translateY(12px) scale(.94);
+  pointer-events:none;
+  transition:opacity .38s cubic-bezier(.4,0,.2,1),transform .38s cubic-bezier(.34,1.56,.64,1);
+}
+.msn-notif.msn-show{
+  opacity:1;transform:translateY(0) scale(1);pointer-events:auto;
+}
+.msn-notif-avatar{
+  width:34px;height:34px;flex-shrink:0;border-radius:50%;
+  background:linear-gradient(135deg,#0084FF,#0668E1);
+  display:flex;align-items:center;justify-content:center;
+}
+.msn-notif-body{flex:1;min-width:0}
+.msn-notif-name{font-size:.68rem;font-weight:800;color:var(--warm-gray);letter-spacing:.04em;margin-bottom:3px}
+.msn-notif-text{font-size:.82rem;font-weight:600;color:var(--brown);line-height:1.42}
+.msn-notif-close{
+  position:absolute;top:8px;right:9px;
+  width:20px;height:20px;border:none;
+  background:var(--bg2);border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;color:var(--warm-gray);
+  transition:background .2s,color .2s;
+}
+.msn-notif-close:hover{background:var(--orange-soft);color:var(--orange)}
+/* red dot badge on Messenger FAB */
+.msn-badge{
+  position:absolute;top:-4px;right:-4px;
+  width:13px;height:13px;
+  background:#ff3b30;border:2.5px solid #0668E1;
+  border-radius:50%;
+  opacity:0;transform:scale(0);
+  transition:opacity .25s,transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.msn-badge.msn-badge-show{opacity:1;transform:scale(1)}
+@media(max-width:480px){
+  .msn-notif{right:16px;bottom:80px;max-width:calc(100vw - 32px)}
+}
+
+/* ─── YOUTUBE GRID (inside experience section) ──────────── */
+.yt-divider{
+  margin:52px 0 32px;
+  display:flex;align-items:center;gap:16px;
+}
+.yt-divider-line{flex:1;height:1px;background:rgba(61,43,31,.12)}
+.yt-divider-label{
+  font-size:.78rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--orange);
+  white-space:nowrap;
+  display:flex;align-items:center;gap:7px;
+}
+.yt-divider-label svg{flex-shrink:0}
+.yt-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.yt-card{
+  border-radius:18px;overflow:hidden;
+  background:#1a1208;
+  box-shadow:var(--shadow-lg);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+}
+.yt-card:hover{transform:translateY(-5px) scale(1.015);box-shadow:0 20px 52px rgba(61,43,31,.22)}
+.yt-card.yt-featured{grid-column:span 2}
+.yt-ratio{position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden}
+.yt-ratio iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block}
+.yt-card-foot{
+  padding:10px 14px 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.yt-card-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--orange2);flex-shrink:0;
+  box-shadow:0 0 7px var(--orange2);
+  animation:yt-pulse 2.2s ease-in-out infinite;
+}
+@keyframes yt-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(1.45)}}
+.yt-card-lbl{font-size:.74rem;font-weight:800;color:rgba(255,255,255,.45);letter-spacing:.05em;text-transform:uppercase}
+
+/* ─── COMMUNITY FOOTER POPUP ───────────────────────────── */
+/* Wrap the "Cộng đồng" footer link so we can position the panel */
+.community-link-wrap{position:relative;display:inline-block}
+.community-panel{
+  position:absolute;
+  bottom:calc(100% + 14px);
+  left:50%;
+  transform:translateX(-50%) translateY(10px) scale(.95);
+  transform-origin:bottom center;
+  width:288px;
+  background:var(--white);
+  border-radius:22px;
+  box-shadow:0 14px 52px rgba(61,43,31,.2),0 3px 12px rgba(0,0,0,.08);
+  overflow:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .32s ease,transform .34s cubic-bezier(.34,1.56,.64,1);
+  z-index:400;
+}
+.community-panel.cp-open{
+  opacity:1;pointer-events:auto;
+  transform:translateX(-50%) translateY(0) scale(1);
+}
+/* caret */
+.community-panel::after{
+  content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  width:16px;height:8px;
+  background:var(--white);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+.cp-head{
+  background:linear-gradient(135deg,var(--orange) 0%,#e85a14 100%);
+  padding:14px 18px;
+  display:flex;align-items:center;gap:10px;
+}
+.cp-head-icon{font-size:1.3rem}
+.cp-head-text h4{color:#fff;font-size:.92rem;font-weight:800}
+.cp-head-text p{color:rgba(255,255,255,.72);font-size:.75rem;margin-top:1px}
+.cp-body{padding:9px 11px 11px;display:flex;flex-direction:column;gap:6px}
+.cp-item{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:13px;
+  background:var(--bg);
+  text-decoration:none;color:inherit;
+  cursor:default;
+  transition:background .18s,transform .18s;
+}
+.cp-item.cp-link{cursor:pointer}
+.cp-item.cp-link:hover{background:var(--orange-soft);transform:translateX(3px)}
+.cp-item-icon{
+  width:36px;height:36px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.cp-item-icon.ci-gmail{background:#fde8da}
+.cp-item-icon.ci-zalo{background:#dff0ff}
+.cp-item-icon.ci-fb{background:#e3ebff}
+.cp-item-lbl{font-size:.67rem;font-weight:800;color:var(--warm-gray);text-transform:uppercase;letter-spacing:.06em}
+.cp-item-val{font-size:.84rem;font-weight:700;color:var(--brown)}
+.cp-item-arrow{margin-left:auto;color:var(--warm-gray);transition:transform .18s,color .18s}
+.cp-item.cp-link:hover .cp-item-arrow{transform:translateX(3px);color:var(--orange)}
+
+/* ─── FACEBOOK FAB ──────────────────────────────────────── */
+.fb-fab{
+  position:fixed;
+  bottom:28px;
+  right:176px; /* sits left of Messenger */
+  z-index:9999;
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#1877F2 0%,#1458c4 100%);
+  color:#fff;border:none;cursor:pointer;
+  padding:13px 22px 13px 16px;
+  border-radius:50px;
+  font-family:'Nunito',sans-serif;
+  font-size:.92rem;font-weight:800;
+  box-shadow:0 6px 28px rgba(24,119,242,.42),0 2px 8px rgba(0,0,0,.12);
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s;
+  letter-spacing:.01em;white-space:nowrap;
+  text-decoration:none;
+}
+.fb-fab:hover{
+  transform:translateY(-4px) scale(1.04);
+  box-shadow:0 14px 40px rgba(24,119,242,.55),0 4px 14px rgba(0,0,0,.15);
+}
+.fb-fab:active{transform:translateY(-1px) scale(.98)}
+.fb-fab svg{flex-shrink:0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
+@media(max-width:640px){
+  .fb-fab{right:0;bottom:80px;border-radius:50px 0 0 50px;padding-right:18px}
+  .messenger-fab{border-radius:50px 0 0 50px;right:0;bottom:28px;padding-right:18px}
+  .msn-notif{right:16px}
+}
+@media(max-width:480px){
+  .fb-fab{bottom:82px;right:0;font-size:.84rem;padding:11px 16px 11px 13px}
+  .messenger-fab{bottom:28px;right:0;font-size:.84rem;padding:11px 16px 11px 13px}
 }
 </style>
 </head>
@@ -773,6 +968,90 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
 
       </div>
     </div>
+
+    <!-- ─── YOUTUBE VIDEOS ─────────────────────────────── -->
+    <div class="yt-divider reveal">
+      <div class="yt-divider-line"></div>
+      <div class="yt-divider-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" fill="#FF0000" opacity=".9"/><polygon points="10,8 16,12 10,16" fill="white"/></svg>
+        Video &amp; Cảm hứng
+      </div>
+      <div class="yt-divider-line"></div>
+    </div>
+
+    <div class="yt-grid reveal">
+      <!-- Video 1 — featured, spans 2 cols -->
+      <div class="yt-card yt-featured">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/7icDijGRKlY"
+            title="Night Drive" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Night Drive</div></div>
+      </div>
+      <!-- Video 2 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/gr0zH2MzSFs"
+            title="Chill Vibes" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Chill Vibes</div></div>
+      </div>
+      <!-- Video 3 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/JCVhhEQVwa4"
+            title="Study Beats" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Study Beats</div></div>
+      </div>
+      <!-- Video 4 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/jum8PGur1PU"
+            title="Lofi Art" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Lofi Art</div></div>
+      </div>
+      <!-- Video 5 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/kS-6ZCyDzKs"
+            title="Watercolor Time" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Watercolor Time</div></div>
+      </div>
+      <!-- Video 6 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/jtsUu8MVuuk"
+            title="Cozy Evening" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Cozy Evening</div></div>
+      </div>
+      <!-- Video 7 -->
+      <div class="yt-card">
+        <div class="yt-ratio">
+          <iframe src="https://www.youtube.com/embed/UTG7MfPsGVc"
+            title="Color Therapy" loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-card-foot"><div class="yt-card-dot"></div><div class="yt-card-lbl">Color Therapy</div></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -782,7 +1061,53 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   <p>Góc nhỏ ấm cúng trên Internet dành cho những người yêu nghệ thuật ở mọi trình độ. Học vẽ, kết bạn và yêu nghệ thuật — từng nét bút một.</p>
   <div class="foot-links">
     <a href="#">Khóa học</a>
-    <a href="#">Cộng đồng</a>
+    <span class="community-link-wrap">
+      <a href="#" id="communityTrigger" onclick="toggleCommunity(event)" aria-expanded="false" aria-haspopup="true">Cộng đồng</a>
+      <div class="community-panel" id="communityPanel" role="dialog" aria-label="Thông tin liên hệ">
+        <div class="cp-head">
+          <div class="cp-head-icon">🌸</div>
+          <div class="cp-head-text">
+            <h4>Liên hệ với Sang</h4>
+            <p>Luôn sẵn sàng trò chuyện!</p>
+          </div>
+        </div>
+        <div class="cp-body">
+          <!-- Gmail -->
+          <div class="cp-item">
+            <div class="cp-item-icon ci-gmail">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#F4722B" stroke-width="1.8"/><polyline points="22,6 12,13 2,6" stroke="#F4722B" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <div class="cp-item-lbl">Gmail</div>
+              <div class="cp-item-val">tnluan1911@gmail.com</div>
+            </div>
+          </div>
+          <!-- Zalo -->
+          <div class="cp-item">
+            <div class="cp-item-icon ci-zalo">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" fill="#0068FF" opacity=".18"/><text x="12" y="16" text-anchor="middle" font-size="7.5" font-weight="800" fill="#0068FF" font-family="Arial">ZALO</text></svg>
+            </div>
+            <div>
+              <div class="cp-item-lbl">Zalo</div>
+              <div class="cp-item-val">0798 754 901</div>
+            </div>
+          </div>
+          <!-- Facebook -->
+          <div class="cp-item cp-link" role="button" tabindex="0"
+               onclick="window.open('https://www.facebook.com/sang.dzjm','_blank')"
+               onkeydown="if(event.key==='Enter')window.open('https://www.facebook.com/sang.dzjm','_blank')">
+            <div class="cp-item-icon ci-fb">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#1877F2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div class="cp-item-lbl">Facebook</div>
+              <div class="cp-item-val">sang.dzjm</div>
+            </div>
+            <svg class="cp-item-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </span>
     <a href="#">Thư viện</a>
     <a href="#">Blog</a>
     <a href="#">Zalo</a>
@@ -791,8 +1116,21 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   <p class="copy">© 2025 Vẽ cùng Sang — Làm với 🧡 và rất nhiều màu nước</p>
 </footer>
 
+<!-- ═══ MESSENGER NOTIFICATION POPUP ══════════════════════ -->
+<div class="msn-notif" id="msnNotif" role="status" aria-live="polite">
+  <div class="msn-notif-avatar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2zm1.007 12.462L10.96 12.29 7.015 14.46l4.337-4.617 2.046 2.172 3.945-2.172-4.336 4.619z" fill="white"/></svg>
+  </div>
+  <div class="msn-notif-body">
+    <div class="msn-notif-name">Vẽ cùng Sang</div>
+    <div class="msn-notif-text" id="msnNotifText">Bạn có mã giảm giá khóa học Vẽ — nhắn tin để nhận ngay! 🎨</div>
+  </div>
+  <button class="msn-notif-close" onclick="dismissMsnNotif()" aria-label="Đóng">✕</button>
+</div>
+
 <!-- ═══ MESSENGER FLOATING BUTTON ═══════════════════════ -->
-<button class="messenger-fab" onclick="openMessenger()" aria-label="Nhắn tin qua Messenger">
+<button class="messenger-fab" onclick="openMessenger()" aria-label="Nhắn tin qua Messenger" style="position:fixed">
+  <div class="msn-badge" id="msnBadge"></div>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2z" fill="white" opacity="0.2"/>
     <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.83 1.292 5.362 3.35 7.12V22l3.218-1.772C9.458 20.4 10.698 20.52 12 20.52c5.523 0 10-4.145 10-9.261C22 6.145 17.523 2 12 2zm1.007 12.462L10.96 12.29 7.015 14.46l4.337-4.617 2.046 2.172 3.945-2.172-4.336 4.619z" fill="white"/>
@@ -800,29 +1138,57 @@ footer .copy{color:rgba(255,255,255,.25);font-size:.78rem}
   Messenger
 </button>
 
+<!-- ═══ FACEBOOK FLOATING BUTTON ════════════════════════ -->
+<a class="fb-fab" href="https://www.facebook.com/sang.dzjm" target="_blank" rel="noopener" aria-label="Mở Facebook">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="white"/>
+  </svg>
+  Facebook
+</a>
+
 <script>
-/* ── Messenger deep link ────────────────────────────────
-   Universal Link strategy (most reliable on iOS & Android):
-
-   https://www.messenger.com/t/USERNAME is a Universal Link.
-   iOS/Android intercept it at the OS level and hand it
-   directly to the Messenger app, opening the exact chat.
-   Using window.location.href (same-tab) on mobile ensures
-   the OS Universal Link handoff fires correctly — _blank
-   can block app handoff in some in-app browsers.
-
-   If Messenger is NOT installed, the browser opens the
-   Messenger web interface instead — clean fallback.
-──────────────────────────────────────────────────────── */
+/* ── Messenger deep link ──────────────────────────────── */
 function openMessenger() {
+  dismissMsnNotif();
   const CHAT_URL = 'https://www.messenger.com/t/sang.dzjm';
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  if (isMobile) {
-    window.location.href = CHAT_URL;
-  } else {
-    window.open(CHAT_URL, '_blank');
-  }
+  if (isMobile) { window.location.href = CHAT_URL; }
+  else { window.open(CHAT_URL, '_blank'); }
 }
+
+/* ── Notification popup ───────────────────────────────── */
+const MSN_MESSAGES = [
+  'Bạn có mã giảm giá khóa học Vẽ — nhắn tin để nhận ngay! 🎨',
+  '🌸 Khóa học vẽ màu nước đang mở đăng ký, hỏi thêm nhé!',
+  '✨ Sang đang online — nhắn tin để được tư vấn miễn phí!',
+  '🖌️ Muốn học vẽ? Inbox Sang để nhận lịch học phù hợp nhé!',
+];
+let _msnIdx = 0, _msnTimer = null, _msnDismissTimer = null;
+
+function showMsnNotif() {
+  const notif = document.getElementById('msnNotif');
+  const badge = document.getElementById('msnBadge');
+  const txt   = document.getElementById('msnNotifText');
+  txt.textContent = MSN_MESSAGES[_msnIdx % MSN_MESSAGES.length];
+  _msnIdx++;
+  notif.classList.add('msn-show');
+  badge.classList.add('msn-badge-show');
+  // auto-dismiss after 6 s
+  _msnDismissTimer = setTimeout(dismissMsnNotif, 6000);
+}
+
+function dismissMsnNotif() {
+  clearTimeout(_msnDismissTimer);
+  const notif = document.getElementById('msnNotif');
+  const badge = document.getElementById('msnBadge');
+  notif.classList.remove('msn-show');
+  badge.classList.remove('msn-badge-show');
+  // schedule next: 18–32 s
+  _msnTimer = setTimeout(showMsnNotif, 18000 + Math.random() * 14000);
+}
+
+// First popup after 5 s
+_msnTimer = setTimeout(showMsnNotif, 5000);
 </script>
 
 <script>
@@ -860,6 +1226,26 @@ function playLesson(){
   btn.style.transform='scale(1.3)';
   setTimeout(()=>{btn.style.opacity='1';btn.style.transform='scale(1)';},600);
 }
+
+/* ── Community panel ──────────────────────────────────── */
+function toggleCommunity(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const panel   = document.getElementById('communityPanel');
+  const trigger = document.getElementById('communityTrigger');
+  const isOpen  = panel.classList.contains('cp-open');
+  panel.classList.toggle('cp-open', !isOpen);
+  trigger.setAttribute('aria-expanded', String(!isOpen));
+}
+document.addEventListener('click', function(e) {
+  const panel   = document.getElementById('communityPanel');
+  const trigger = document.getElementById('communityTrigger');
+  if (panel && panel.classList.contains('cp-open') &&
+      !panel.contains(e.target) && !trigger.contains(e.target)) {
+    panel.classList.remove('cp-open');
+    trigger.setAttribute('aria-expanded','false');
+  }
+});
 </script>
 </body>
 </html>
